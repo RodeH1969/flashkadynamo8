@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
 body {
@@ -34,7 +33,7 @@ h1::after {
     content: '⚡';
     color: #ffc107;
     font-size: 3.75rem;
-    animation-name: flash, colorFlash; /* Split animation properties */
+    animation-name: flash, colorFlash;
     animation-duration: 3s, 3s;
     animation-iteration-count: infinite, infinite;
 }
@@ -107,8 +106,39 @@ h1::after {
     border-radius: 5px;
 }
 
+/* FRONT: Dexter logo on every card */
 .card-front {
-    background: url('/flashka.png') no-repeat center/cover;
+    background-image: url('/ad1/Dexter_logo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* BACKS: Dexter1–Dexter10, hooked by script.js classes */
+.card-back.image-1  { background-image: url('/ad1/Dexter1.png'); }
+.card-back.image-2  { background-image: url('/ad1/Dexter2.png'); }
+.card-back.image-3  { background-image: url('/ad1/Dexter3.png'); }
+.card-back.image-4  { background-image: url('/ad1/Dexter4.png'); }
+.card-back.image-5  { background-image: url('/ad1/Dexter5.png'); }
+.card-back.image-6  { background-image: url('/ad1/Dexter6.png'); }
+.card-back.image-7  { background-image: url('/ad1/Dexter7.png'); }
+.card-back.image-8  { background-image: url('/ad1/Dexter8.jpg'); } /* jpg */
+.card-back.image-9  { background-image: url('/ad1/Dexter9.png'); }
+.card-back.image-10 { background-image: url('/ad1/Dexter10.png'); }
+
+.card-back.image-1,
+.card-back.image-2,
+.card-back.image-3,
+.card-back.image-4,
+.card-back.image-5,
+.card-back.image-6,
+.card-back.image-7,
+.card-back.image-8,
+.card-back.image-9,
+.card-back.image-10 {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .card-back {
@@ -172,10 +202,10 @@ button:hover {
 }
 
 @keyframes colorFlash {
-    0% { color: #ffc107; } /* Orange */
-    33% { color: #007bff; } /* Blue */
-    66% { color: #ffff00; } /* Yellow */
-    100% { color: #ffc107; } /* Back to Orange */
+    0% { color: #ffc107; }
+    33% { color: #007bff; }
+    66% { color: #ffff00; }
+    100% { color: #ffc107; }
 }
 
 @media (max-width: 1024px) {

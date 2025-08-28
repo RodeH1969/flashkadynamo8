@@ -1,32 +1,357 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Flashka</title>
-  <link rel="stylesheet" href="/css/style.css?v=0819"/>
-  <script defer src="/js/script.js"></script>
-</head>
-<body>
-  <div class="container">
-    <h1>Flashka</h1>
-    <p class="instructions">Match 10 images with the least card flips</p>
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-    <div class="status">
-      <p class="attempts-had">Attempts Had: <span class="number" id="attempts">0</span></p>
-      <p class="attempts-left">Attempts Left: <span class="number" id="attempts-left">16</span></p>
-    </div>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
 
-    <div class="game-board" id="game-board"></div>
+.container {
+    text-align: center;
+    max-width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
 
-    <div class="result" id="result" style="display:none;">
-      <p id="result-message"></p>
-      <p id="times-played"></p>
-      <div id="game-over-box" class="game-over-box"></div>
-      <!-- Hidden initially; JS shows only on WIN -->
-      <button id="share-btn" style="display:none">Send SMS</button>
-      <button id="restart-btn" style="display:none">Play Again</button>
-    </div>
-  </div>
-</body>
-</html>
+h1 {
+    font-family: 'Bangers', cursive;
+    font-size: 6.25rem;
+    color: #28a745;
+    margin: 3px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+h1::before,
+h1::after {
+    content: '⚡';
+    color: #ffc107;
+    font-size: 3.75rem;
+    animation-name: flash, colorFlash;
+    animation-duration: 3s, 3s;
+    animation-iteration-count: infinite, infinite;
+}
+
+.instructions {
+    font-size: 2rem;
+    color: black;
+    font-weight: bold;
+    font-style: italic;
+    margin: 3px 0;
+}
+
+.status {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 3px 0;
+    font-size: 1.2rem;
+}
+
+.attempts-had {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.attempts-left {
+    color: #ff8c00;
+    font-weight: bold;
+}
+
+.number {
+    font-size: 2rem;
+    font-weight: bold;
+    animation: flash 3s infinite;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    width: 90vw;
+    max-width: 750px;
+    margin: 0 auto;
+}
+
+.card {
+    width: 100%;
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 5px;
+}
+
+/* FRONT: Dexter logo on every card */
+.card-front {
+    background-image: url('/ad1/Dexter_logo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* BACKS: Dexter1–Dexter10, hooked by script.js classes */
+.card-back.image-1  { background-image: url('/ad1/Dexter1.png'); }
+.card-back.image-2  { background-image: url('/ad1/Dexter2.png'); }
+.card-back.image-3  { background-image: url('/ad1/Dexter3.png'); }
+.card-back.image-4  { background-image: url('/ad1/Dexter4.png'); }
+.card-back.image-5  { background-image: url('/ad1/Dexter5.png'); }
+.card-back.image-6  { background-image: url('/ad1/Dexter6.png'); }
+.card-back.image-7  { background-image: url('/ad1/Dexter7.png'); }
+.card-back.image-8  { background-image: url('/ad1/Dexter8.jpg'); }
+.card-back.image-9  { background-image: url('/ad1/Dexter9.png'); }
+.card-back.image-10 { background-image: url('/ad1/Dexter10.png'); }
+
+.card-back.image-1,
+.card-back.image-2,
+.card-back.image-3,
+.card-back.image-4,
+.card-back.image-5,
+.card-back.image-6,
+.card-back.image-7,
+.card-back.image-8,
+.card-back.image-9,
+.card-back.image-10 {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+}
+
+.card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.result {
+    margin-top: 10px;
+}
+
+.game-over-box {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 2px solid #28a745;
+    border-radius: 5px;
+    font-size: 1rem;
+    white-space: pre-wrap;
+    text-align: left;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.game-over-box .prize-message {
+    font-weight: bold;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+}
+
+button:hover {
+    background-color: #218838;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+@keyframes colorFlash {
+    0% { color: #ffc107; }
+    33% { color: #007bff; }
+    66% { color: #ffff00; }
+    100% { color: #ffc107; }
+}
+
+@media (max-width: 1024px) {
+    h1 {
+        font-size: 5rem;
+    }
+    h1::before,
+    h1::after {
+        font-size: 3.25rem;
+    }
+    .instructions {
+        font-size: 1.8rem;
+    }
+    .status {
+        font-size: 1rem;
+        gap: 25px;
+    }
+    .number {
+        font-size: 1.8rem;
+    }
+    .game-board {
+        max-width: 900px;
+        gap: 7px;
+    }
+    .result {
+        margin-top: 8px;
+    }
+    .game-over-box {
+        font-size: 0.9rem;
+    }
+    button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 767px) {
+    h1 {
+        font-size: 5.5rem;
+    }
+    h1::before,
+    h1::after {
+        font-size: 3.75rem;
+    }
+    .instructions {
+        font-size: 1.5rem;
+    }
+    .status {
+        font-size: 0.8rem;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        margin: 2px 0;
+    }
+    .number {
+        font-size: 1.5rem;
+    }
+    .game-board {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 360px;
+        gap: 5px;
+    }
+    .result {
+        margin-top: 6px;
+    }
+    .game-over-box {
+        font-size: 0.8rem;
+    }
+    button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        margin: 3px;
+    }
+}
+
+@media (max-height: 700px) {
+    .container {
+        padding: 6px;
+    }
+    h1 {
+        font-size: 4.5rem;
+        margin: 2px 0;
+    }
+    h1::before,
+    h1::after {
+        font-size: 2.75rem;
+    }
+    .instructions {
+        font-size: 1.3rem;
+    }
+    .status {
+        font-size: 0.9rem;
+        gap: 12px;
+        margin: 2px 0;
+    }
+    .number {
+        font-size: 1.3rem;
+    }
+    .game-board {
+        gap: 4px;
+    }
+    .result {
+        margin-top: 6px;
+    }
+    .game-over-box {
+        font-size: 0.8rem;
+    }
+    button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        margin: 3px;
+    }
+}
+
+@media (max-height: 700px) and (max-width: 767px) {
+    h1 {
+        font-size: 4rem;
+        margin: 1px 0;
+    }
+    h1::before,
+    h1::after {
+        font-size: 2.5rem;
+    }
+    .instructions {
+        font-size: 1.2rem;
+    }
+    .status {
+        font-size: 0.7rem;
+        gap: 10px;
+        margin: 1px 0;
+    }
+    .number {
+        font-size: 1.2rem;
+    }
+    .game-board {
+        gap: 3px;
+    }
+    .result {
+        margin-top: 4px;
+    }
+    .game-over-box {
+        font-size: 0.7rem;
+    }
+    button {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+        margin: 2px;
+    }
+}
