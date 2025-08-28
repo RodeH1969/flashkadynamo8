@@ -1,12 +1,11 @@
-// Flashka — One-play-only lock, 16-attempt rule, SMS on win
+// Flashka — Always-play version (no device lock), 17-attempt rule, SMS on win
 // Card fronts/back images are controlled by CSS (Dexter set).
 
-const MAX_ATTEMPTS = 16;      // total TURNS allowed (each turn = 2 flips)
+const MAX_ATTEMPTS = 17;      // total TURNS allowed (each turn = 2 flips)
 const TOTAL_PAIRS  = 10;      // 10 pairs => 20 cards
 
-// Persistent keys
-const LOCK_KEY      = "flashka_locked";          // '1' once a game has completed
-const PLAY_COUNT_KEY= "flashka_plays";           // device counter
+// Optional device play counter (not used for locking)
+const PLAY_COUNT_KEY = "flashka_plays";
 
 // DOM refs
 const boardEl        = document.getElementById("game-board");
@@ -17,6 +16,9 @@ const resultMsgEl    = document.getElementById("result-message");
 const timesPlayedEl  = document.getElementById("times-played");
 const shareBtn       = document.getElementById("share-btn");
 const gameOverBox    = document.getElementById("game-over-box");
+
+// ---- One-time cleanup: remove any old lock flag from earlier builds
+try { localStorage.removeItem("flashka_locked"); } catch(e) {}
 
 // State
 let attempts = 0;          // increments once per TURN (on the 2nd flip)
@@ -29,11 +31,9 @@ let secondCard = null;
 const getPlayCount = () => Number(localStorage.getItem(PLAY_COUNT_KEY) || 0);
 const incrementPlayCount = () => {
   const n = getPlayCount() + 1;
-  localStorage.setItem(PLAY_COUNT_KEY, String(n));
+  try { localStorage.setItem(PLAY_COUNT_KEY, String(n)); } catch(e) {}
   return n;
 };
-const isLocked = () => localStorage.getItem(LOCK_KEY) === "1";
-const setLocked = () => localStorage.setItem(LOCK_KEY, "1");
 
 function updateAttemptsUI() {
   attemptsEl.textContent = String(attempts);
@@ -140,30 +140,28 @@ function checkEnd() {
 }
 
 function showResult(didWin) {
-  // LOCK the device immediately (prevents refresh/new game)
-  setLocked();
-
+  // NO LOCKING. Just show result UI.
   resultEl.style.display = "block";
   gameOverBox.innerHTML = "";
 
   if (didWin) {
     resultMsgEl.textContent =
-      "Woohoo. You won a choccy surprise. Just show this screen when you're called that your coffee is ready & collect your treat!";
+      "Woohoo. You won a choccy surprise. Show this screen when your coffee is ready to collect your treat!";
 
     // Show SMS button only on a win
     shareBtn.style.display = "inline-block";
     shareBtn.textContent = "Send SMS";
     const smsBody =
-      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 16 moves!!";
+      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka!";
     shareBtn.onclick = () => {
       window.location.href = `sms:?&body=${encodeURIComponent(smsBody)}`;
     };
 
-    gameOverBox.innerHTML =
-      "<div class='prize-message'>One play per purchase. To play again, buy another coffee and scan the new QR.</div>";
+    // Keep it clean — no 'play again' prompt here.
+    gameOverBox.innerHTML = "<div class='prize-message'></div>";
   } else {
     resultMsgEl.textContent =
-      "Oh shucks! Just missed it! One play per purchase. To try again, buy another coffee and scan the new QR.";
+      "Close one! Thanks for playing — scan the QR again any time for a fresh game.";
     shareBtn.style.display = "none";
     shareBtn.onclick = null;
   }
@@ -172,28 +170,8 @@ function showResult(didWin) {
   timesPlayedEl.textContent = `Times played on this device: ${plays}`;
 }
 
-function renderLockedScreen() {
-  // Hide board, show lock message
-  boardEl.innerHTML = "";
-  resultEl.style.display = "block";
-  shareBtn.style.display = "none";
-  resultMsgEl.textContent =
-    "This device has already played. One play per purchase.";
-  gameOverBox.innerHTML =
-    "<div>To play again, buy another coffee and scan the new QR code.</div>";
-  // Make the counters look final/locked
-  attemptsEl.textContent = "-";
-  attemptsLeftEl.textContent = "0";
-}
-
 function startGame() {
-  // If already locked, show lock screen and stop.
-  if (isLocked()) {
-    renderLockedScreen();
-    return;
-  }
-
-  // Reset state for the current (first and only) run
+  // Always allow a new run (no lock checks)
   attempts = 0;
   matchedPairs = 0;
   lockBoard = false;
