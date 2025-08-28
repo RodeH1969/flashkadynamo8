@@ -1,12 +1,10 @@
-// Flashka — One-play-only lock, 16-attempt rule, SMS on win
-// Card fronts/back images are controlled by CSS (Dexter set).
+// Flashka — Memory game (16-attempt rule + win SMS button)
+// Expects CSS to provide:
+// .card, .card-inner, .card-face, .card-front (flashka.png), .card-back.image-1..image-10
+// Put images at /images/flashka.png and /images/image_1.png ... /images/image_10.png
 
 const MAX_ATTEMPTS = 16;      // total TURNS allowed (each turn = 2 flips)
 const TOTAL_PAIRS  = 10;      // 10 pairs => 20 cards
-
-// Persistent keys
-const LOCK_KEY      = "flashka_locked";          // '1' once a game has completed
-const PLAY_COUNT_KEY= "flashka_plays";           // device counter
 
 // DOM refs
 const boardEl        = document.getElementById("game-board");
@@ -16,6 +14,7 @@ const resultEl       = document.getElementById("result");
 const resultMsgEl    = document.getElementById("result-message");
 const timesPlayedEl  = document.getElementById("times-played");
 const shareBtn       = document.getElementById("share-btn");
+const restartBtn     = document.getElementById("restart-btn");
 const gameOverBox    = document.getElementById("game-over-box");
 
 // State
@@ -25,15 +24,14 @@ let lockBoard = false;
 let firstCard = null;
 let secondCard = null;
 
-// Helpers
+// Simple play counter (per device)
+const PLAY_COUNT_KEY = "flashka_plays";
 const getPlayCount = () => Number(localStorage.getItem(PLAY_COUNT_KEY) || 0);
 const incrementPlayCount = () => {
   const n = getPlayCount() + 1;
   localStorage.setItem(PLAY_COUNT_KEY, String(n));
   return n;
 };
-const isLocked = () => localStorage.getItem(LOCK_KEY) === "1";
-const setLocked = () => localStorage.setItem(LOCK_KEY, "1");
 
 function updateAttemptsUI() {
   attemptsEl.textContent = String(attempts);
@@ -62,10 +60,10 @@ function makeCard(id, idx) {
   inner.className = "card-inner";
 
   const front = document.createElement("div");
-  front.className = "card-face card-front"; // CSS shows Dexter logo
+  front.className = "card-face card-front"; // CSS should show /images/flashka.png
 
   const back = document.createElement("div");
-  back.className = `card-face card-back image-${id}`; // CSS maps to Dexter# image
+  back.className = `card-face card-back image-${id}`; // CSS maps to /images/image_#.png
 
   inner.appendChild(front);
   inner.appendChild(back);
@@ -140,60 +138,41 @@ function checkEnd() {
 }
 
 function showResult(didWin) {
-  // LOCK the device immediately (prevents refresh/new game)
-  setLocked();
-
   resultEl.style.display = "block";
   gameOverBox.innerHTML = "";
 
   if (didWin) {
+    // Win message (your exact wording)
     resultMsgEl.textContent =
       "Woohoo. You won a choccy surprise. Just show this screen when you're called that your coffee is ready & collect your treat!";
 
     // Show SMS button only on a win
     shareBtn.style.display = "inline-block";
     shareBtn.textContent = "Send SMS";
+
+    // Exact SMS body you requested
     const smsBody =
       "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 16 moves!!";
     shareBtn.onclick = () => {
+      // Opens the device SMS app with the message prefilled (mobile only)
       window.location.href = `sms:?&body=${encodeURIComponent(smsBody)}`;
     };
-
-    gameOverBox.innerHTML =
-      "<div class='prize-message'>One play per purchase. To play again, buy another coffee and scan the new QR.</div>";
   } else {
     resultMsgEl.textContent =
-      "Oh shucks! Just missed it! One play per purchase. To try again, buy another coffee and scan the new QR.";
+      "Oh shucks! Just missed it! Come back and try again tomorrow.";
     shareBtn.style.display = "none";
     shareBtn.onclick = null;
   }
 
   const plays = incrementPlayCount();
   timesPlayedEl.textContent = `Times played on this device: ${plays}`;
-}
 
-function renderLockedScreen() {
-  // Hide board, show lock message
-  boardEl.innerHTML = "";
-  resultEl.style.display = "block";
-  shareBtn.style.display = "none";
-  resultMsgEl.textContent =
-    "This device has already played. One play per purchase.";
-  gameOverBox.innerHTML =
-    "<div>To play again, buy another coffee and scan the new QR code.</div>";
-  // Make the counters look final/locked
-  attemptsEl.textContent = "-";
-  attemptsLeftEl.textContent = "0";
+  restartBtn.style.display = "inline-block";
+  restartBtn.onclick = () => startGame();
 }
 
 function startGame() {
-  // If already locked, show lock screen and stop.
-  if (isLocked()) {
-    renderLockedScreen();
-    return;
-  }
-
-  // Reset state for the current (first and only) run
+  // Reset state
   attempts = 0;
   matchedPairs = 0;
   lockBoard = false;
@@ -205,6 +184,7 @@ function startGame() {
   resultEl.style.display = "none";
   resultMsgEl.textContent = "";
   shareBtn.style.display = "none";
+  restartBtn.style.display = "none";
   boardEl.innerHTML = "";
 
   // Build & render
