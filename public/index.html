@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Flashka</title>
+  <link rel="stylesheet" href="/css/style.css?v=0819"/>
+  <script defer src="/js/script.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Flashka</h1>
+    <p class="instructions">Match 10 images with the least card flips</p>
+
+    <div class="status">
+      <p class="attempts-had">Attempts Had: <span class="number" id="attempts">0</span></p>
+      <p class="attempts-left">Attempts Left: <span class="number" id="attempts-left">16</span></p>
+    </div>
+
+    <div class="game-board" id="game-board"></div>
+
+    <div class="result" id="result" style="display:none;">
+      <p id="result-message"></p>
+      <p id="times-played"></p>
+      <div id="game-over-box" class="game-over-box"></div>
+      <!-- Hidden initially; JS shows only on WIN -->
+      <button id="share-btn" style="display:none">Send SMS</button>
+      <button id="restart-btn" style="display:none">Play Again</button>
+    </div>
+  </div>
+</body>
+</html>
