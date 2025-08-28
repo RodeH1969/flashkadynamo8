@@ -1,70 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Flashka – 20 Cards</title>
-  <style>
-    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;background:#f7f7fb;color:#111}
-    header{padding:14px 18px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.06)}
-    .grid{
-      display:grid;grid-template-columns:repeat(5,1fr);gap:10px;
-      width:min(720px,92vw);margin:18px auto;
-    }
-    .card{
-      aspect-ratio:3/4;background:#fff;border:1px solid #e7e7ee;border-radius:12px;
-      box-shadow:0 3px 10px rgba(0,0,0,.04);display:flex;align-items:center;justify-content:center;
-      font-weight:700;color:#555;cursor:pointer;user-select:none;
-      transition:transform .1s ease, box-shadow .1s ease;
-    }
-    .card:active{transform:translateY(1px);box-shadow:0 2px 6px rgba(0,0,0,.08)}
-    .controls{display:flex;gap:10px;justify-content:center;margin:12px 0 24px}
-    .btn{padding:10px 14px;border-radius:10px;border:1px solid #ddd;background:#fff;cursor:pointer}
-    @media (max-width:480px){ .grid{gap:8px} .card{border-radius:10px} }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Flashka</title>
+
+  <!-- cache-busters so clients pull latest files -->
+  <link rel="stylesheet" href="/css/style.css?v=0830-lock" />
+  <script defer src="/js/script.js?v=0830-lock"></script>
 </head>
 <body>
-  <header><strong>Flashka</strong> · 20 Cards</header>
+  <div class="container">
+    <h1>Flashka</h1>
+    <p class="instructions">Match the 10 images in less than 17 card flips and win a choccy with your coffee!</p>
 
-  <!-- 20 cards -->
-  <div class="grid" id="cardGrid"></div>
+    <div class="status">
+      <p class="attempts-had">Attempts Had: <span class="number" id="attempts">0</span></p>
+      <p class="attempts-left">Attempts Left: <span class="number" id="attempts-left">16</span></p>
+    </div>
 
-  <div class="controls">
-    <!-- test buttons (remove in production) -->
-    <button class="btn" id="simulateWin">Simulate WIN</button>
-    <button class="btn" id="simulateLose">Simulate LOSE</button>
+    <div class="game-board" id="game-board"></div>
+
+    <div class="result" id="result" style="display:none;">
+      <p id="result-message"></p>
+      <p id="times-played"></p>
+      <div id="game-over-box" class="game-over-box"></div>
+      <!-- Shown only on WIN. No restart button anymore. -->
+      <button id="share-btn" style="display:none">Send SMS</button>
+    </div>
   </div>
-
-  <!-- (re 2) Include the overlay -->
-  <script src="/flashka-overlay.js"></script>
-
-  <!-- (re 3) Call it from your game logic -->
-  <script>
-    // build the 20-card grid (demo)
-    const grid = document.getElementById('cardGrid');
-    for (let i = 1; i <= 20; i++) {
-      const div = document.createElement('div');
-      div.className = 'card';
-      div.textContent = i;
-      div.addEventListener('click', () => flipCard(i));
-      grid.appendChild(div);
-    }
-
-    // ----- your game logic (demo stubs) -----
-    const flipped = new Set();
-    function flipCard(i){
-      flipped.add(i);
-      // when the “game ends”, show overlay
-      if (flipped.size === 20) {
-        // Example: player wins when all 20 are flipped
-        showResultOverlay('win', 'All 20 cards conquered!');
-        flipped.clear(); // reset for demo
-      }
-    }
-
-    // test buttons (you can remove these)
-    document.getElementById('simulateWin').onclick  = () => showResultOverlay('win',  'You nailed it! 🎉');
-    document.getElementById('simulateLose').onclick = () => showResultOverlay('lose', 'Close one — try again!');
-  </script>
 </body>
 </html>
