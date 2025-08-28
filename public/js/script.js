@@ -1,7 +1,7 @@
-// Flashka — Always-play version (no device lock), 17-attempt rule, SMS on win
+// Flashka — Always-play version (no device lock), 19-attempt rule, SMS on win
 // Card fronts/back images are controlled by CSS (Dexter set).
 
-const MAX_ATTEMPTS = 17;      // total TURNS allowed (each turn = 2 flips)
+const MAX_ATTEMPTS = 19;      // total TURNS allowed (each turn = 2 flips)
 const TOTAL_PAIRS  = 10;      // 10 pairs => 20 cards
 
 // Optional device play counter (not used for locking)
