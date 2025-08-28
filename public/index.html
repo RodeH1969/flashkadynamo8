@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Flashka</title>
 
-  <!-- add ?v=0829 (or any number) to force reload -->
-  <link rel="stylesheet" href="/css/style.css?v=0829" />
-  <script defer src="/js/script.js?v=0829"></script>
+  <!-- cache-busters so clients pull latest files -->
+  <link rel="stylesheet" href="/css/style.css?v=0830-lock" />
+  <script defer src="/js/script.js?v=0830-lock"></script>
 </head>
 <body>
   <div class="container">
     <h1>Flashka</h1>
-    <p class="instructions">Match the 10 images in less than 17 card flips and win a choccy with your coffee!</p>
+    <p class="instructions">Match 10 images with the least card flips</p>
 
     <div class="status">
       <p class="attempts-had">Attempts Had: <span class="number" id="attempts">0</span></p>
@@ -25,8 +25,8 @@
       <p id="result-message"></p>
       <p id="times-played"></p>
       <div id="game-over-box" class="game-over-box"></div>
+      <!-- Shown only on WIN. No restart button anymore. -->
       <button id="share-btn" style="display:none">Send SMS</button>
-      <button id="restart-btn" style="display:none">Play Again</button>
     </div>
   </div>
 </body>
