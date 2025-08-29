@@ -5,14 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Flashka</title>
 
-  <!-- cache-busters so clients pull latest files -->
+  <!-- Core styles & game script (20 flips) -->
   <link rel="stylesheet" href="/css/style.css?v=0841-20" />
   <script defer src="/js/script.js?v=0841-20"></script>
+
+  <!-- Winner FX (balloons + sound overlay; non-invasive) -->
+  <link rel="stylesheet" href="/css/winfx.css?v=0842-win" />
+  <script defer src="/js/winfx.js?v=0842-win"></script>
 </head>
 <body>
   <div class="container">
     <h1>Flashka</h1>
-    <p class="instructions">Use your memory skills to match the 10 images in 20 card flips or less to win a CHOCCY surprise with your coffee!</p>
+    <p class="instructions">
+      Use your memory skills to match the 10 images in 20 card flips or less to win a CHOCCY surprise with your coffee!
+    </p>
 
     <div class="status">
       <p class="attempts-had">Attempts Had: <span class="number" id="attempts">0</span></p>
@@ -25,8 +31,11 @@
       <p id="result-message"></p>
       <p id="times-played"></p>
       <div id="game-over-box" class="game-over-box"></div>
+      <!-- Shown only on WIN. No restart button. -->
       <button id="share-btn" style="display:none">Send SMS</button>
     </div>
   </div>
+
+  <!-- WinFX overlay root is injected by /js/winfx.js when a win is detected -->
 </body>
 </html>
