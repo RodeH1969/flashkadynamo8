@@ -1,0 +1,54 @@
+/* LoseFX overlay: sad emoji rain + message */
+#losefx-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  display: none;            /* shown via JS */
+}
+
+#losefx-overlay.show { display: block; }
+
+#losefx-overlay .emoji {
+  position: absolute;
+  top: -12vh;               /* start above the screen */
+  font-size: var(--size, 28px);
+  opacity: .95;
+  filter: drop-shadow(0 6px 10px rgba(0,0,0,.25));
+  transform: translateX(0) translateY(-10vh) rotate(var(--rot, 0deg));
+  animation: fallDown linear var(--dur, 7s) var(--delay, 0s) forwards;
+}
+
+@keyframes fallDown {
+  from { transform: translateY(-12vh) translateX(0) rotate(var(--rot, 0deg)); }
+  to   { transform: translateY(110vh) translateX(var(--drift, 0px)) rotate(calc(var(--rot, 0deg) + 360deg)); }
+}
+
+#losefx-overlay .message {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%) scale(1);
+  background: rgba(0,0,0,.75);
+  color: #fff;
+  padding: 18px 24px;
+  border-radius: 14px;
+  text-align: center;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+  pointer-events: none;
+  animation: pop .25s ease-out;
+}
+#losefx-overlay .message h2 {
+  margin: 0 0 6px;
+  font-size: clamp(20px, 4vw, 36px);
+}
+#losefx-overlay .message p {
+  margin: 0;
+  opacity: .9;
+  font-size: clamp(13px, 2vw, 16px);
+}
+
+@keyframes pop {
+  from { transform: translate(-50%,-50%) scale(.9); opacity: 0; }
+  to   { transform: translate(-50%,-50%) scale(1);   opacity: 1; }
+}

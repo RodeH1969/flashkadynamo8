@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Flashka</title>
 
-  <!-- Core styles & game script (20 flips) -->
-  <link rel="stylesheet" href="/css/style.css?v=0841-20" />
-  <script defer src="/js/script.js?v=0841-20"></script>
+  <!-- Core styles & game script (20 flips, always-play) -->
+  <link rel="stylesheet" href="/css/style.css?v=0845-combo" />
+  <script defer src="/js/script.js?v=0845-combo"></script>
 
   <!-- Winner FX (balloons + sound overlay; non-invasive) -->
-  <link rel="stylesheet" href="/css/winfx.css?v=0842-win" />
-  <script defer src="/js/winfx.js?v=0842-win"></script>
+  <link rel="stylesheet" href="/css/winfx.css?v=0845-combo" />
+  <script defer src="/js/winfx.js?v=0845-combo"></script>
+
+  <!-- Loser FX (sad emoji rain + sound; non-invasive) -->
+  <link rel="stylesheet" href="/css/losefx.css?v=0845-combo" />
+  <script defer src="/js/losefx.js?v=0845-combo"></script>
 </head>
 <body>
   <div class="container">
@@ -36,6 +40,6 @@
     </div>
   </div>
 
-  <!-- WinFX overlay root is injected by /js/winfx.js when a win is detected -->
+  <!-- Overlay roots are injected dynamically by winfx.js and losefx.js -->
 </body>
 </html>
