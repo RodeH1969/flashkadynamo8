@@ -43,10 +43,10 @@
       root.appendChild(e);
     }
 
-    // Message
+    // Message (your requested copy)
     const msg = document.createElement('div');
     msg.className = 'message';
-    msg.innerHTML = `<h2>Unlucky!</h2><p>Thanks for playing — scan the QR again any time for a fresh game.</p>`;
+    msg.innerHTML = `<h2>Unlucky!</h2><p>Thanks for playing Flashka! — scan the QR code again when you buy your next coffee for another attempt at cracking Flashka!!</p>`;
     root.appendChild(msg);
 
     // Sound (with iOS-friendly fallback)
@@ -88,7 +88,7 @@
 
   function isLoss() {
     // Result is shown by the game, but not all cards are matched.
-    // (Winner FX will handle the win case when all cards matched.)
+    // (Winner FX handles the win case when all cards matched.)
     return resultVisible() && !isAllMatched();
   }
 
