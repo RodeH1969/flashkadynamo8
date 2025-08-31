@@ -1,10 +1,10 @@
-// Flashka — Always-play version (no device lock), 20-attempt rule, SMS on win
+// Flashka — Always-play, 21-attempt rule, SMS on win
 // Card fronts/back images are controlled by CSS (Dexter set).
 
-const MAX_ATTEMPTS = 20;      // total TURNS allowed (each turn = 2 flips)
+const MAX_ATTEMPTS = 21;      // total TURNS allowed (each turn = 2 flips)
 const TOTAL_PAIRS  = 10;      // 10 pairs => 20 cards
 
-// Optional device play counter (not used for locking)
+// Persistent (local) play counter only — no lock
 const PLAY_COUNT_KEY = "flashka_plays";
 
 // DOM refs
@@ -17,9 +17,6 @@ const timesPlayedEl  = document.getElementById("times-played");
 const shareBtn       = document.getElementById("share-btn");
 const gameOverBox    = document.getElementById("game-over-box");
 
-// ---- One-time cleanup: remove any old lock flag from earlier builds
-try { localStorage.removeItem("flashka_locked"); } catch(e) {}
-
 // State
 let attempts = 0;          // increments once per TURN (on the 2nd flip)
 let matchedPairs = 0;
@@ -31,7 +28,7 @@ let secondCard = null;
 const getPlayCount = () => Number(localStorage.getItem(PLAY_COUNT_KEY) || 0);
 const incrementPlayCount = () => {
   const n = getPlayCount() + 1;
-  try { localStorage.setItem(PLAY_COUNT_KEY, String(n)); } catch(e) {}
+  localStorage.setItem(PLAY_COUNT_KEY, String(n));
   return n;
 };
 
@@ -140,28 +137,27 @@ function checkEnd() {
 }
 
 function showResult(didWin) {
-  // NO LOCKING. Just show result UI.
   resultEl.style.display = "block";
   gameOverBox.innerHTML = "";
 
   if (didWin) {
     resultMsgEl.textContent =
-      "Woohoo. You won a choccy surprise. Show this screen when your coffee is ready to collect your treat!";
+      "Woohoo. You won a choccy surprise. Just show this screen when you're called that your coffee is ready & collect your treat!";
 
     // Show SMS button only on a win
     shareBtn.style.display = "inline-block";
     shareBtn.textContent = "Send SMS";
     const smsBody =
-      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka!";
+      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 21 moves!!";
     shareBtn.onclick = () => {
       window.location.href = `sms:?&body=${encodeURIComponent(smsBody)}`;
     };
 
-    // Keep it clean — no 'play again' prompt here.
-    gameOverBox.innerHTML = "<div class='prize-message'></div>";
+    gameOverBox.innerHTML =
+      "<div class='prize-message'>To play again, just scan the QR code for a fresh game.</div>";
   } else {
     resultMsgEl.textContent =
-      "Close one! Thanks for playing — scan the QR again any time for a fresh game.";
+      "Oh shucks! Just missed it! Thanks for playing — scan the QR again any time for a fresh game.";
     shareBtn.style.display = "none";
     shareBtn.onclick = null;
   }
@@ -171,7 +167,7 @@ function showResult(didWin) {
 }
 
 function startGame() {
-  // Always allow a new run (no lock checks)
+  // Reset state for a run
   attempts = 0;
   matchedPairs = 0;
   lockBoard = false;
