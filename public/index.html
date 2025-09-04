@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Flashka</title>
 
-  <!-- Favicon (prevents 404 on /favicon.ico) -->
+  <!-- Favicon (prevents 404) -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
 
-  <!-- Core styles -->
-  <link rel="stylesheet" href="/css/style.css?v=0904-map" />
-  <!-- (Optional) keep if you use these effects -->
+  <!-- Styles -->
+  <link rel="stylesheet" href="/css/style.css?v=0912-front-logo" />
+  <!-- Keep if you use these effects -->
   <link rel="stylesheet" href="/css/winfx.css?v=0845-combo" />
   <link rel="stylesheet" href="/css/losefx.css?v=0845-combo" />
 
@@ -30,12 +30,12 @@
     // Your committed filenames per folder
     const PACKS = {
       // If/when you add a real ad1 folder, update this entry.
-      ad1: { base: '/ad2', logo: 'Remy_logo.png', mk: i => `Remy${i}.png` },
+      ad1: { base: '/ad2', logo: 'Remy_logo.png',  mk: i => `Remy${i}.png` },
 
       ad2: { base: '/ad2', logo: 'Remy_logo.png',  mk: i => `Remy${i}.png` },
       ad3: { base: '/ad3', logo: 'MAFS_logo.png',  mk: i => `MAFS${i}.png` },
       ad4: { base: '/ad4', logo: 'Agentw_logo.png',mk: i => `Agentw${i}.png` },
-      ad5: { base: '/ad5', logo: 'Dexter_logo.png',mk: i => i === 8 ? `Dexter8.jpg` : `Dexter${i}.png` },
+      ad5: { base: '/ad5', logo: 'Dexter_logo.png',mk: i => (i === 8 ? `Dexter8.jpg` : `Dexter${i}.png`) },
       ad6: { base: '/ad6', logo: 'MAFS_logo.png',  mk: i => `MAFS${i}.png` },
       ad7: { base: '/ad7', logo: 'Agentw_logo.png',mk: i => `Agentw${i}.png` },
     };
@@ -54,8 +54,10 @@
     const base = cfg.base.replace(/\/$/, '');
 
     // Set CSS variables used by style.css
-    set('--front', `${base}/${cfg.logo}`);
-    for (let i = 1; i <= 10; i++) set(`--img${i}`, `${base}/${cfg.mk(i)}`);
+    root.style.setProperty('--front', `url('${base}/${cfg.logo}')`);
+    for (let i = 1; i <= 10; i++) {
+      root.style.setProperty(`--img${i}`, `url('${base}/${cfg.mk(i)}')`);
+    }
 
     // Expose chosen pack (handy for debugging)
     document.documentElement.setAttribute('data-adpack', key);
@@ -81,20 +83,14 @@
 
     <div class="game-board" id="game-board"></div>
 
-    <!-- Undercard: shows today's pack logo automatically -->
-    <div class="undercard">
-      <div class="brand-logo" title="Sponsor"></div>
-    </div>
+    <!-- (Undercard was removed as requested; the logo now shows on card fronts) -->
 
     <div class="result" id="result" style="display:none;">
       <p id="result-message"></p>
       <p id="times-played"></p>
       <div id="game-over-box" class="game-over-box"></div>
-      <!-- Shown only on WIN. No restart button. -->
       <button id="share-btn" style="display:none">Send SMS</button>
     </div>
   </div>
-
-  <!-- Overlay roots are injected dynamically by winfx.js and losefx.js -->
 </body>
 </html>

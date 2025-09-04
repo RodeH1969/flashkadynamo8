@@ -1,5 +1,5 @@
 /* =========================================================
-   Flashka – layout + ad-pack mapping (7-day rotation, PNG-only)
+   Flashka – layout + ad-pack mapping (front logo on each card)
    ========================================================= */
 :root {
   --container-max: 980px;
@@ -11,8 +11,11 @@
   --text: #222;
   --muted: #666;
   --bg: #f7f7f7;
+
+  /* The mapping script writes to these: --front, --img1..--img10 */
 }
 
+/* Base layout */
 * { box-sizing: border-box; }
 html, body { height: 100%; }
 body {
@@ -51,7 +54,7 @@ h1 {
 }
 
 /* =========================================================
-   Board & card shell (generic; compatible with common JS)
+   Board & card shell (compatible with most memory game DOMs)
    ========================================================= */
 .game-board {
   display: grid;
@@ -62,8 +65,9 @@ h1 {
   margin: 12px auto 6px;
 }
 
-/* Typical memory card structure:
+/* Typical structure:
    .card > .inner > (.card-front + .card-back)
+   (some codebases use .front/.front-face instead of .card-front)
 */
 .card {
   width: var(--card-w);
@@ -81,7 +85,7 @@ h1 {
 }
 .card.flipped .inner { transform: rotateY(180deg); }
 
-.card-front, .card-back {
+.card-front, .card-back, .front, .front-face, .back, .back-face {
   position: absolute;
   inset: 0;
   backface-visibility: hidden;
@@ -89,57 +93,37 @@ h1 {
   overflow: hidden;
   background-color: #fff;
 }
+
+/* Some engines rotate the front; keep the original behavior on .card-front only */
 .card-front { transform: rotateY(180deg); }
 
-/* Ensure images scale nicely */
+/* =========================================================
+   FRONT FACE: show today's pack logo on each card
+   (multi-selector to match various DOMs)
+   ========================================================= */
 .card-front,
-.card-back,
-.card-back[class*="image-"] {
-  background-size: cover;
+.front,
+.front-face,
+.face.front {
+  background-image: var(--front, url('/ad5/Dexter_logo.png'));
+  background-size: contain;       /* logo fits fully */
   background-position: center;
   background-repeat: no-repeat;
 }
 
 /* =========================================================
-   AD PACK MAPPING (variables with ad1 Dexter PNG fallbacks)
-   Folders: /ad1 ... /ad7
-   Files inside each: logo.png, 1.png..10.png
+   BACKS: 10 faces (use CSS vars set by the mapping script)
    ========================================================= */
-
-/* FRONT: pack logo (fallback to ad1 Dexter logo) */
-.card-front {
-  background-image: var(--front, url('/ad1/Dexter_logo.png'));
-}
-
-/* BACKS: 10 faces (fallback to ad1 Dexter) */
-.card-back.image-1  { background-image: var(--img1,  url('/ad1/Dexter1.png')); }
-.card-back.image-2  { background-image: var(--img2,  url('/ad1/Dexter2.png')); }
-.card-back.image-3  { background-image: var(--img3,  url('/ad1/Dexter3.png')); }
-.card-back.image-4  { background-image: var(--img4,  url('/ad1/Dexter4.png')); }
-.card-back.image-5  { background-image: var(--img5,  url('/ad1/Dexter5.png')); }
-.card-back.image-6  { background-image: var(--img6,  url('/ad1/Dexter6.png')); }
-.card-back.image-7  { background-image: var(--img7,  url('/ad1/Dexter7.png')); }
-.card-back.image-8  { background-image: var(--img8,  url('/ad1/Dexter8.png')); } /* now PNG */
-.card-back.image-9  { background-image: var(--img9,  url('/ad1/Dexter9.png')); }
-.card-back.image-10 { background-image: var(--img10, url('/ad1/Dexter10.png')); }
-
-/* =========================================================
-   UNDERCARD (brand strip below the board)
-   ========================================================= */
-.undercard {
-  margin-top: 12px;
-  display: flex;
-  justify-content: center;
-}
-.undercard .brand-logo {
-  width: 220px;
-  height: 60px;
-  background-image: var(--front, url('/ad1/Dexter_logo.png'));
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
-}
+.card-back.image-1,  .back.image-1,  .back-face.image-1  { background-image: var(--img1); }
+.card-back.image-2,  .back.image-2,  .back-face.image-2  { background-image: var(--img2); }
+.card-back.image-3,  .back.image-3,  .back-face.image-3  { background-image: var(--img3); }
+.card-back.image-4,  .back.image-4,  .back-face.image-4  { background-image: var(--img4); }
+.card-back.image-5,  .back.image-5,  .back-face.image-5  { background-image: var(--img5); }
+.card-back.image-6,  .back.image-6,  .back-face.image-6  { background-image: var(--img6); }
+.card-back.image-7,  .back.image-7,  .back-face.image-7  { background-image: var(--img7); }
+.card-back.image-8,  .back.image-8,  .back-face.image-8  { background-image: var(--img8); }
+.card-back.image-9,  .back.image-9,  .back-face.image-9  { background-image: var(--img9); }
+.card-back.image-10, .back.image-10, .back-face.image-10 { background-image: var(--img10); }
 
 /* =========================================================
    Result box basics
@@ -162,5 +146,4 @@ h1 {
     --card-h: 110px;
     --board-gap: 8px;
   }
-  .undercard .brand-logo { width: 180px; height: 54px; }
 }
