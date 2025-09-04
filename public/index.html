@@ -5,66 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Flashka</title>
 
-  <!-- Favicon (prevents 404) -->
+  <!-- Prevents /favicon.ico 404 in console -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="/css/style.css?v=0912-front-logo" />
-  <!-- Keep if you use these effects -->
+  <!-- Your original styles + effects -->
+  <link rel="stylesheet" href="/css/style.css?v=front-logo-map" />
   <link rel="stylesheet" href="/css/winfx.css?v=0845-combo" />
   <link rel="stylesheet" href="/css/losefx.css?v=0845-combo" />
 
-  <!-- Ad-pack mapping: sets CSS vars to your real file names -->
+  <!-- PACK MAPPING (minimal): sets CSS variables for front + 10 backs -->
   <script>
   (function () {
     const root = document.documentElement;
-    const params = new URLSearchParams(location.search);
-    const set = (name, url) => root.style.setProperty(name, `url('${url}')`);
+    const p = new URLSearchParams(location.search);
 
-    // Weekday (Brisbane) Mon..Sun -> 1..7
-    const weekday = new Intl.DateTimeFormat('en-AU', {
-      timeZone: 'Australia/Brisbane', weekday: 'short'
-    }).format(new Date());
-    const dowMap = { Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6, Sun:7 };
-
-    // Your committed filenames per folder
+    // Map your real folder/filenames
     const PACKS = {
-      // If/when you add a real ad1 folder, update this entry.
-      ad1: { base: '/ad2', logo: 'Remy_logo.png',  mk: i => `Remy${i}.png` },
+      // ad1: if you later add it, change this entry
+      ad1: { base: '/ad4', logo: 'Agentw_logo.png', img: i => `Agentw${i}.png` }, // alias to Agentw
 
-      ad2: { base: '/ad2', logo: 'Remy_logo.png',  mk: i => `Remy${i}.png` },
-      ad3: { base: '/ad3', logo: 'MAFS_logo.png',  mk: i => `MAFS${i}.png` },
-      ad4: { base: '/ad4', logo: 'Agentw_logo.png',mk: i => `Agentw${i}.png` },
-      ad5: { base: '/ad5', logo: 'Dexter_logo.png',mk: i => (i === 8 ? `Dexter8.jpg` : `Dexter${i}.png`) },
-      ad6: { base: '/ad6', logo: 'MAFS_logo.png',  mk: i => `MAFS${i}.png` },
-      ad7: { base: '/ad7', logo: 'Agentw_logo.png',mk: i => `Agentw${i}.png` },
+      ad2: { base: '/ad2', logo: 'Remy_logo.png',   img: i => `Remy${i}.png` },
+      ad3: { base: '/ad3', logo: 'MAFS_logo.png',   img: i => `MAFS${i}.png` },
+      ad4: { base: '/ad4', logo: 'Agentw_logo.png', img: i => `Agentw${i}.png` },
+      ad5: { base: '/ad5', logo: 'Dexter_logo.png', img: i => (i === 8 ? 'Dexter8.jpg' : `Dexter${i}.png`) },
+      ad6: { base: '/ad6', logo: 'MAFS_logo.png',   img: i => `MAFS${i}.png` },
+      ad7: { base: '/ad7', logo: 'Agentw_logo.png', img: i => `Agentw${i}.png` },
     };
 
-    function chooseKey() {
-      const ad = params.get('ad');                    // ?ad=1..7
-      if (ad && /^[1-7]$/.test(ad)) return `ad${ad}`;
-      const pack = params.get('pack');                // ?pack=adN
-      if (pack && /^ad[1-7]$/i.test(pack)) return pack.toLowerCase();
-      const n = dowMap[weekday] || 1;                 // default rotate
-      return `ad${n}`;
-    }
+    // Choose pack: ?ad=1..7 overrides; default to Agentw (ad4) so your request is satisfied now
+    const key = (p.get('ad') && /^([1-7])$/.test(p.get('ad'))) ? `ad${p.get('ad')}` : 'ad4';
+    const cfg = PACKS[key];
 
-    const key = chooseKey();
-    const cfg = PACKS[key] || PACKS.ad2;              // safe fallback
-    const base = cfg.base.replace(/\/$/, '');
-
-    // Set CSS variables used by style.css
-    root.style.setProperty('--front', `url('${base}/${cfg.logo}')`);
+    // Write CSS variables
+    root.style.setProperty('--front', `url('${cfg.base}/${cfg.logo}')`);
     for (let i = 1; i <= 10; i++) {
-      root.style.setProperty(`--img${i}`, `url('${base}/${cfg.mk(i)}')`);
+      root.style.setProperty(`--img${i}`, `url('${cfg.base}/${cfg.img(i)}')`);
     }
 
-    // Expose chosen pack (handy for debugging)
+    // helpful for debugging
     document.documentElement.setAttribute('data-adpack', key);
   })();
   </script>
 
-  <!-- Game scripts -->
+  <!-- Your original game script (unchanged) -->
   <script defer src="/js/script.js?v=0851-21"></script>
   <script defer src="/js/winfx.js?v=0845-combo"></script>
   <script defer src="/js/losefx.js?v=0845-combo"></script>
@@ -82,8 +65,6 @@
     </div>
 
     <div class="game-board" id="game-board"></div>
-
-    <!-- (Undercard was removed as requested; the logo now shows on card fronts) -->
 
     <div class="result" id="result" style="display:none;">
       <p id="result-message"></p>
