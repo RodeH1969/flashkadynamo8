@@ -5,16 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Flashka</title>
 
-  <!-- Core styles & game script (21 flips) -->
-  <link rel="stylesheet" href="/css/style.css?v=0851-21" />
-  <script defer src="/js/script.js?v=0851-21"></script>
+  <!-- Select today's ad pack (/ad1..ad7) using Brisbane weekday.
+       Overrides: ?ad=1..7 or ?pack=ad6 or ?pack=ads/remy-special -->
+  <script>
+  (function () {
+    const params = new URLSearchParams(location.search);
+    const root = document.documentElement;
+    const set = (name, url) => root.style.setProperty(name, `url('${url}')`);
 
-  <!-- Winner FX (balloons + sound overlay; non-invasive) -->
+    const weekday = new Intl.DateTimeFormat('en-AU', {
+      timeZone: 'Australia/Brisbane',
+      weekday: 'short'
+    }).format(new Date()); // Mon..Sun
+    const map = { Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6, Sun:7 };
+
+    function chooseBase() {
+      const ad = params.get('ad');               // ?ad=1..7
+      if (ad && /^[1-7]$/.test(ad)) return `/ad${ad}`;
+      const pack = params.get('pack');           // ?pack=ad6 or ?pack=ads/remy
+      if (pack) {
+        if (/^ad[1-7]$/i.test(pack)) return `/${pack.toLowerCase()}`;
+        return `/${pack.replace(/^\//, '')}`;    // allow custom folders
+      }
+      return `/ad${map[weekday] || 1}`;          // default rotation
+    }
+
+    const base = chooseBase();
+    document.documentElement.setAttribute('data-adpack', base.replace(/^\//,''));
+
+    // All PNG now
+    set('--front', `${base}/logo.png`);
+    for (let i = 1; i <= 10; i++) {
+      set(`--img${i}`, `${base}/${i}.png`);
+    }
+  })();
+  </script>
+
+  <!-- Styles (bump version if you need a hard refresh) -->
+  <link rel="stylesheet" href="/css/style.css?v=0904-png" />
   <link rel="stylesheet" href="/css/winfx.css?v=0845-combo" />
-  <script defer src="/js/winfx.js?v=0845-combo"></script>
-
-  <!-- Loser FX (sad emoji rain + sound; non-invasive) -->
   <link rel="stylesheet" href="/css/losefx.css?v=0845-combo" />
+
+  <!-- Game scripts -->
+  <script defer src="/js/script.js?v=0851-21"></script>
+  <script defer src="/js/winfx.js?v=0845-combo"></script>
   <script defer src="/js/losefx.js?v=0845-combo"></script>
 </head>
 <body>
@@ -30,6 +64,11 @@
     </div>
 
     <div class="game-board" id="game-board"></div>
+
+    <!-- Undercard: shows today's pack logo automatically -->
+    <div class="undercard">
+      <div class="brand-logo" title="Sponsor"></div>
+    </div>
 
     <div class="result" id="result" style="display:none;">
       <p id="result-message"></p>

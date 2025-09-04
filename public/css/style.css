@@ -1,357 +1,166 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+/* =========================================================
+   Flashka – layout + ad-pack mapping (7-day rotation, PNG-only)
+   ========================================================= */
+:root {
+  --container-max: 980px;
+  --board-gap: 10px;
+  --card-w: 120px;
+  --card-h: 140px;
+  --card-radius: 12px;
+  --accent: #0a8f3a;
+  --text: #222;
+  --muted: #666;
+  --bg: #f7f7f7;
+}
 
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f0f0f0;
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: var(--bg);
 }
 
 .container {
-    text-align: center;
-    max-width: 100%;
-    padding: 8px;
-    box-sizing: border-box;
+  max-width: var(--container-max);
+  margin: 24px auto;
+  padding: 0 16px 32px;
 }
 
 h1 {
-    font-family: 'Bangers', cursive;
-    font-size: 6.25rem;
-    color: #28a745;
-    margin: 3px 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+  margin: 0 0 4px;
+  font-size: 28px;
+  line-height: 1.2;
+  color: var(--accent);
 }
-
-h1::before,
-h1::after {
-    content: '⚡';
-    color: #ffc107;
-    font-size: 3.75rem;
-    animation-name: flash, colorFlash;
-    animation-duration: 3s, 3s;
-    animation-iteration-count: infinite, infinite;
-}
-
 .instructions {
-    font-size: 2rem;
-    color: black;
-    font-weight: bold;
-    font-style: italic;
-    margin: 3px 0;
+  margin: 0 0 12px;
+  color: var(--muted);
 }
 
 .status {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    margin: 3px 0;
-    font-size: 1.2rem;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.status .number {
+  font-weight: 700;
+  color: #111;
 }
 
-.attempts-had {
-    color: #28a745;
-    font-weight: bold;
-}
-
-.attempts-left {
-    color: #ff8c00;
-    font-weight: bold;
-}
-
-.number {
-    font-size: 2rem;
-    font-weight: bold;
-    animation: flash 3s infinite;
-}
-
+/* =========================================================
+   Board & card shell (generic; compatible with common JS)
+   ========================================================= */
 .game-board {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-    width: 90vw;
-    max-width: 750px;
-    margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, var(--card-w));
+  grid-auto-rows: var(--card-h);
+  gap: var(--board-gap);
+  justify-content: center;
+  margin: 12px auto 6px;
 }
 
+/* Typical memory card structure:
+   .card > .inner > (.card-front + .card-back)
+*/
 .card {
-    width: 100%;
-    aspect-ratio: 1;
-    perspective: 1000px;
-    cursor: pointer;
+  width: var(--card-w);
+  height: var(--card-h);
+  perspective: 900px;
 }
-
-.card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
+.card .inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--card-radius);
+  transform-style: preserve-3d;
+  transition: transform 0.35s ease;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
 }
-
-.card.flipped .card-inner {
-    transform: rotateY(180deg);
-}
+.card.flipped .inner { transform: rotateY(180deg); }
 
 .card-front, .card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border-radius: 5px;
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  background-color: #fff;
+}
+.card-front { transform: rotateY(180deg); }
+
+/* Ensure images scale nicely */
+.card-front,
+.card-back,
+.card-back[class*="image-"] {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
-/* FRONT: Dexter logo on every card */
+/* =========================================================
+   AD PACK MAPPING (variables with ad1 Dexter PNG fallbacks)
+   Folders: /ad1 ... /ad7
+   Files inside each: logo.png, 1.png..10.png
+   ========================================================= */
+
+/* FRONT: pack logo (fallback to ad1 Dexter logo) */
 .card-front {
-    background-image: url('/ad1/Dexter_logo.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  background-image: var(--front, url('/ad1/Dexter_logo.png'));
 }
 
-/* BACKS: Dexter1–Dexter10, hooked by script.js classes */
-.card-back.image-1  { background-image: url('/ad1/Dexter1.png'); }
-.card-back.image-2  { background-image: url('/ad1/Dexter2.png'); }
-.card-back.image-3  { background-image: url('/ad1/Dexter3.png'); }
-.card-back.image-4  { background-image: url('/ad1/Dexter4.png'); }
-.card-back.image-5  { background-image: url('/ad1/Dexter5.png'); }
-.card-back.image-6  { background-image: url('/ad1/Dexter6.png'); }
-.card-back.image-7  { background-image: url('/ad1/Dexter7.png'); }
-.card-back.image-8  { background-image: url('/ad1/Dexter8.jpg'); } /* jpg */
-.card-back.image-9  { background-image: url('/ad1/Dexter9.png'); }
-.card-back.image-10 { background-image: url('/ad1/Dexter10.png'); }
+/* BACKS: 10 faces (fallback to ad1 Dexter) */
+.card-back.image-1  { background-image: var(--img1,  url('/ad1/Dexter1.png')); }
+.card-back.image-2  { background-image: var(--img2,  url('/ad1/Dexter2.png')); }
+.card-back.image-3  { background-image: var(--img3,  url('/ad1/Dexter3.png')); }
+.card-back.image-4  { background-image: var(--img4,  url('/ad1/Dexter4.png')); }
+.card-back.image-5  { background-image: var(--img5,  url('/ad1/Dexter5.png')); }
+.card-back.image-6  { background-image: var(--img6,  url('/ad1/Dexter6.png')); }
+.card-back.image-7  { background-image: var(--img7,  url('/ad1/Dexter7.png')); }
+.card-back.image-8  { background-image: var(--img8,  url('/ad1/Dexter8.png')); } /* now PNG */
+.card-back.image-9  { background-image: var(--img9,  url('/ad1/Dexter9.png')); }
+.card-back.image-10 { background-image: var(--img10, url('/ad1/Dexter10.png')); }
 
-.card-back.image-1,
-.card-back.image-2,
-.card-back.image-3,
-.card-back.image-4,
-.card-back.image-5,
-.card-back.image-6,
-.card-back.image-7,
-.card-back.image-8,
-.card-back.image-9,
-.card-back.image-10 {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+/* =========================================================
+   UNDERCARD (brand strip below the board)
+   ========================================================= */
+.undercard {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+.undercard .brand-logo {
+  width: 220px;
+  height: 60px;
+  background-image: var(--front, url('/ad1/Dexter_logo.png'));
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.1));
 }
 
-.card-back {
-    transform: rotateY(180deg);
-}
-
-.card-back img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
-}
-
-.result {
-    margin-top: 10px;
-}
-
+/* =========================================================
+   Result box basics
+   ========================================================= */
+.result { margin-top: 16px; }
 .game-over-box {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #ffffff;
-    border: 2px solid #28a745;
-    border-radius: 5px;
-    font-size: 1rem;
-    white-space: pre-wrap;
-    text-align: left;
-    max-width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #eee;
 }
 
-.game-over-box .prize-message {
-    font-weight: bold;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    margin: 5px;
-    cursor: pointer;
-    border-radius: 5px;
-    border: none;
-    background-color: #28a745;
-    color: white;
-}
-
-button:hover {
-    background-color: #218838;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
-}
-
-@keyframes flash {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
-@keyframes colorFlash {
-    0% { color: #ffc107; }
-    33% { color: #007bff; }
-    66% { color: #ffff00; }
-    100% { color: #ffc107; }
-}
-
-@media (max-width: 1024px) {
-    h1 {
-        font-size: 5rem;
-    }
-    h1::before,
-    h1::after {
-        font-size: 3.25rem;
-    }
-    .instructions {
-        font-size: 1.8rem;
-    }
-    .status {
-        font-size: 1rem;
-        gap: 25px;
-    }
-    .number {
-        font-size: 1.8rem;
-    }
-    .game-board {
-        max-width: 900px;
-        gap: 7px;
-    }
-    .result {
-        margin-top: 8px;
-    }
-    .game-over-box {
-        font-size: 0.9rem;
-    }
-    button {
-        padding: 8px 16px;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 767px) {
-    h1 {
-        font-size: 5.5rem;
-    }
-    h1::before,
-    h1::after {
-        font-size: 3.75rem;
-    }
-    .instructions {
-        font-size: 1.5rem;
-    }
-    .status {
-        font-size: 0.8rem;
-        flex-direction: row;
-        align-items: center;
-        gap: 15px;
-        margin: 2px 0;
-    }
-    .number {
-        font-size: 1.5rem;
-    }
-    .game-board {
-        grid-template-columns: repeat(4, 1fr);
-        max-width: 360px;
-        gap: 5px;
-    }
-    .result {
-        margin-top: 6px;
-    }
-    .game-over-box {
-        font-size: 0.8rem;
-    }
-    button {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-        margin: 3px;
-    }
-}
-
-@media (max-height: 700px) {
-    .container {
-        padding: 6px;
-    }
-    h1 {
-        font-size: 4.5rem;
-        margin: 2px 0;
-    }
-    h1::before,
-    h1::after {
-        font-size: 2.75rem;
-    }
-    .instructions {
-        font-size: 1.3rem;
-    }
-    .status {
-        font-size: 0.9rem;
-        gap: 12px;
-        margin: 2px 0;
-    }
-    .number {
-        font-size: 1.3rem;
-    }
-    .game-board {
-        gap: 4px;
-    }
-    .result {
-        margin-top: 6px;
-    }
-    .game-over-box {
-        font-size: 0.8rem;
-    }
-    button {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-        margin: 3px;
-    }
-}
-
-@media (max-height: 700px) and (max-width: 767px) {
-    h1 {
-        font-size: 4rem;
-        margin: 1px 0;
-    }
-    h1::before,
-    h1::after {
-        font-size: 2.5rem;
-    }
-    .instructions {
-        font-size: 1.2rem;
-    }
-    .status {
-        font-size: 0.7rem;
-        gap: 10px;
-        margin: 1px 0;
-    }
-    .number {
-        font-size: 1.2rem;
-    }
-    .game-board {
-        gap: 3px;
-    }
-    .result {
-        margin-top: 4px;
-    }
-    .game-over-box {
-        font-size: 0.7rem;
-    }
-    button {
-        padding: 5px 10px;
-        font-size: 0.7rem;
-        margin: 2px;
-    }
+/* =========================================================
+   Responsive tweaks
+   ========================================================= */
+@media (max-width: 680px) {
+  :root {
+    --card-w: 90px;
+    --card-h: 110px;
+    --board-gap: 8px;
+  }
+  .undercard .brand-logo { width: 180px; height: 54px; }
 }
