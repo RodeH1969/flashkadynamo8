@@ -1,54 +1,62 @@
-<!-- /public/js/adpack.js -->
 <script>
 (function () {
-  // --- Helpers ---
-  const params = new URLSearchParams(location.search);
   const root = document.documentElement;
+  const params = new URLSearchParams(location.search);
   const set = (name, url) => root.style.setProperty(name, `url('${url}')`);
 
-  // Get weekday in Brisbane (Mon, Tue, …)
-  const weekdayShort = new Intl.DateTimeFormat('en-AU', {
-    timeZone: 'Australia/Brisbane',
-    weekday: 'short'
-  }).format(new Date()); // e.g. "Mon"
+  // Map weekday (Brisbane) Mon..Sun -> 1..7
+  const weekday = new Intl.DateTimeFormat('en-AU', {
+    timeZone: 'Australia/Brisbane', weekday: 'short'
+  }).format(new Date());
+  const dowMap = { Mon:1, Tue:2, Wed:3, Thu:4, Fri:5, Sat:6, Sun:7 };
 
-  // Map Mon..Sun -> 1..7
-  const map = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 };
+  // Your real filenames per folder
+  const PACKS = {
+    // ad1 missing in your commit; alias to ad2 (Remy) for now
+    ad1: { base: '/ad2', logo: 'Remy_logo.png', mk: i => `Remy${i}.png` },
 
-  // Query param overrides:
-  //   ?ad=5            -> /ad5
-  //   ?pack=ad3        -> /ad3
-  //   ?pack=ads/remy   -> /ads/remy  (custom folder support if you need it)
-  function chooseBase() {
-    // ?ad=#
-    const adNum = params.get('ad');
-    if (adNum && /^[1-7]$/.test(adNum)) return `/ad${adNum}`;
-
-    // ?pack=
-    const pack = params.get('pack');
-    if (pack) {
-      if (/^ad[1-7]$/i.test(pack)) return `/${pack.toLowerCase()}`;
-      return `/${pack.replace(/^\//, '')}`; // allow custom paths like ads/remy
+    ad2: { base: '/ad2', logo: 'Remy_logo.png',
+      mk: i => `Remy${i}.png`
+    },
+    ad3: { base: '/ad3', logo: 'MAFS_logo.png',
+      mk: i => `MAFS${i}.png`
+    },
+    ad4: { base: '/ad4', logo: 'Agentw_logo.png',
+      mk: i => `Agentw${i}.png`
+    },
+    ad5: { base: '/ad5', logo: 'Dexter_logo.png',
+      mk: i => i === 8 ? `Dexter8.jpg` : `Dexter${i}.png` // #8 is .jpg
+    },
+    ad6: { base: '/ad6', logo: 'MAFS_logo.png',
+      mk: i => `MAFS${i}.png`
+    },
+    ad7: { base: '/ad7', logo: 'Agentw_logo.png',
+      mk: i => `Agentw${i}.png`
     }
+  };
 
-    // Default: day-of-week rotation in Brisbane
-    const n = map[weekdayShort] || 1; // fallback to ad1
-    return `/ad${n}`;
+  function chooseKey() {
+    // Allow ?ad=1..7 or ?pack=ad3 for testing
+    const ad = params.get('ad');
+    if (ad && /^[1-7]$/.test(ad)) return `ad${ad}`;
+    const pack = params.get('pack');
+    if (pack && /^ad[1-7]$/i.test(pack)) return pack.toLowerCase();
+    // Default rotation by weekday
+    const n = dowMap[weekday] || 1;
+    return `ad${n}`;
   }
 
-  const base = chooseBase();
+  const key = chooseKey();
+  const cfg = PACKS[key] || PACKS.ad2; // safe fallback
+  const base = cfg.base.replace(/\/$/, ''); // '/ad3'
 
-  // Special-case: if today maps to /ad1 and your legacy set has image 8 as .jpg,
-  // we set .jpg for #8 ONLY in ad1. For all other packs we expect .png for 1..10.
-  const ext8 = base === '/ad1' ? '.jpg' : '.png';
-
-  // Expect uniform naming inside each adX folder:
-  //   logo.png
-  //   1.png … 10.png   (except ad1’s 8.jpg handled above)
-  set('--front', `${base}/logo.png`);
+  // Set CSS variables to actual files
+  set('--front', `${base}/${cfg.logo}`);
   for (let i = 1; i <= 10; i++) {
-    const ext = (i === 8) ? ext8 : '.png';
-    set(`--img${i}`, `${base}/${i}${ext}`);
+    set(`--img${i}`, `${base}/${cfg.mk(i)}`);
   }
+
+  // For debugging: see which pack was chosen
+  document.documentElement.setAttribute('data-adpack', key);
 })();
 </script>
