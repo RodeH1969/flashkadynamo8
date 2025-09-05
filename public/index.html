@@ -8,87 +8,10 @@
   <!-- Prevent favicon 404 -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
 
-  <!-- Your stylesheet (make sure it uses CSS vars: --front and --img1..10) -->
-  <link rel="stylesheet" href="/css/style.css?v=packforce-1"/>
+  <!-- Just your CSS; no pack-mapping script -->
+  <link rel="stylesheet" href="/css/style.css?v=revert-plain"/>
 
-  <!-- PACK FORCE + MAPPING -->
-  <script>
-  (function () {
-    const root = document.documentElement;
-    const qs = new URLSearchParams(location.search);
-
-    /* --- Force control ---
-       - ?force=ad2 | 2 | remy  -> stores lock in localStorage
-       - ?clearforce=1          -> removes lock
-       - If a lock exists, it overrides URL ?ad / ?pack
-    */
-    const LS_KEY = 'flashka_force_pack';
-
-    if (qs.get('clearforce') === '1') {
-      localStorage.removeItem(LS_KEY);
-    }
-
-    const forceRaw = qs.get('force');
-    if (forceRaw) {
-      const norm = String(forceRaw).trim().toLowerCase();
-      const forced = normalizeToAdKey(norm); // returns 'ad2' etc or null
-      if (forced) {
-        localStorage.setItem(LS_KEY, forced);
-      }
-    }
-
-    const storedForce = localStorage.getItem(LS_KEY);
-
-    // Map of valid packs and their files
-    const PACKS = {
-      ad2: { base:'/ad2', logo:'Remy_logo.png',   img:i=>`Remy${i}.png` },
-      ad3: { base:'/ad3', logo:'MAFS_logo.png',   img:i=>`MAFS${i}.png` },
-      ad4: { base:'/ad4', logo:'Agentw_logo.png', img:i=>`Agentw${i}.png` },
-      ad5: { base:'/ad5', logo:'Dexter_logo.png', img:i=> i===8 ? 'Dexter8.jpg' : `Dexter${i}.png` },
-      ad6: { base:'/ad6', logo:'MAFS_logo.png',   img:i=>`MAFS${i}.png` },
-      ad7: { base:'/ad7', logo:'Agentw_logo.png', img:i=>`Agentw${i}.png` },
-      // ad1 currently points to ad3 (update if you create a real ad1 folder)
-      ad1: { base:'/ad3', logo:'MAFS_logo.png',   img:i=>`MAFS${i}.png` }
-    };
-
-    // Choose pack: localStorage force > URL pack/ad > default ad3 (MAFS)
-    let key =
-      (storedForce && PACKS[storedForce]) ? storedForce :
-      (qs.get('pack') && /^ad[1-7]$/i.test(qs.get('pack')) ? qs.get('pack').toLowerCase() :
-      (qs.get('ad') && /^[1-7]$/.test(qs.get('ad')) ? `ad${qs.get('ad')}` : 'ad3'));
-
-    if (!PACKS[key]) key = 'ad3';
-
-    const cfg = PACKS[key];
-    const base = cfg.base.replace(/\/$/, '');
-
-    // Write CSS vars: --front and --img1..10
-    root.style.setProperty('--front', `url('${base}/${cfg.logo}')`);
-    for (let i = 1; i <= 10; i++) {
-      root.style.setProperty(`--img${i}`, `url('${base}/${cfg.img(i)}')`);
-    }
-
-    // Mark which pack is active (useful for debugging)
-    root.setAttribute('data-adpack', key);
-
-    // Helper: normalize user tokens to ad keys (ad2)
-    function normalizeToAdKey(token) {
-      // accept "ad2", "2", and brand names
-      if (/^ad[1-7]$/i.test(token)) return token.toLowerCase();
-      if (/^[1-7]$/.test(token)) return `ad${token}`;
-
-      const alias = {
-        remy: 'ad2',
-        mafs: 'ad3',
-        agentw: 'ad4',  // or ad7 depending on your rotation
-        dexter: 'ad5'
-      };
-      return alias[token] || null;
-    }
-  })();
-  </script>
-
-  <!-- Your other styles/scripts -->
+  <!-- Your existing effects + game scripts -->
   <link rel="stylesheet" href="/css/winfx.css"/>
   <link rel="stylesheet" href="/css/losefx.css"/>
   <script defer src="/js/script.js"></script>
