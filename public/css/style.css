@@ -1,220 +1,256 @@
-/* Flashka Game — main stylesheet
-   - Card fronts use: var(--front)
-   - Card backs use:  var(--img1) ... var(--img10)
-   - No image fallbacks are defined (so the pack mapping fully controls visuals)
-*/
-
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-/* ---------- Base ---------- */
-* { box-sizing: border-box; }
-html, body { height: 100%; }
 body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f0f0f0;
-  color: #111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
 }
 
-/* ---------- Layout ---------- */
 .container {
-  text-align: center;
-  max-width: 100%;
-  padding: 8px;
+    text-align: center;
+    max-width: 100%;
+    padding: 8px;
 }
 
-/* Title */
 h1 {
-  font-family: 'Bangers', cursive;
-  font-size: 6rem;
-  color: #28a745;
-  margin: 6px 0 4px;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+    font-family: 'Bangers', cursive;
+    font-size: 10rem;
+    color: #28a745;
+    margin: 3px 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
 }
-
 h1::before,
 h1::after {
-  content: '⚡';
-  color: #ffc107;
-  font-size: 3.25rem;
-  animation: flash 3s infinite, colorFlash 3s infinite;
+    content: '⚡';
+    color: #ffc107;
+    font-size: 4rem;
+    animation: flash 3s infinite, colorFlash 3s infinite;
 }
 
-/* Instruction & Status */
 .instructions {
-  font-size: 1.6rem;
-  font-weight: 700;
-  font-style: italic;
-  margin: 6px 0 10px;
-  color: #000;
+    font-size: 2rem;
+    color: black;
+    font-weight: bold;
+    font-style: italic;
+    margin: 3px 0;
 }
 
 .status {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 36px;
-  margin: 6px 0 10px;
-  font-size: 1.1rem;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 3px 0;
+    
+}
+.status p {
+    margin: 0;
+}
+.attempts-had {
+    color: #28a745;
+    font-weight: bold;
+}
+.attempts-left {
+    color: #ff8c00;
+    font-weight: bold;
+}
+.number {
+    font-weight: bold;
+    color: #000;
+    font-size: 2rem;
+    animation: flash 3s infinite;
 }
 
-.attempts-had { color: #28a745; font-weight: 700; }
-.attempts-left { color: #ff8c00; font-weight: 700; }
-.number { font-size: 1.8rem; font-weight: 800; animation: flash 3s infinite; }
-
-/* ---------- Board & Cards ---------- */
 .game-board {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  width: 92vw;
-  max-width: 760px;
-  margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    width: 95vw;
+    max-width: 760px;
+    margin: 0 auto;
 }
 
 .card {
-  width: 100%;
-  aspect-ratio: 1;
-  perspective: 1000px;
-  cursor: pointer;
-  user-select: none;
+    width: 100%;
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
+    user-select: none;
 }
-
-.card.is-disabled { pointer-events: none; }
+.card.is-disabled {
+    pointer-events: none;
+}
 
 .card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+}
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
 }
 
-.card.flipped .card-inner { transform: rotateY(180deg); }
+.card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+}
 
-.card-front,
+/* FRONT: Dexter logo on every card (remapped to Remy) */
+.card-front {
+    background-image: url('/ad2/Remy_logo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* BACKS: Dexter1–Dexter10, hooked by script.js classes (remapped to Remy1..10) */
+.card-back.image-1  { background-image: url('/ad2/Remy1.png'); }
+.card-back.image-2  { background-image: url('/ad2/Remy2.png'); }
+.card-back.image-3  { background-image: url('/ad2/Remy3.png'); }
+.card-back.image-4  { background-image: url('/ad2/Remy4.png'); }
+.card-back.image-5  { background-image: url('/ad2/Remy5.png'); }
+.card-back.image-6  { background-image: url('/ad2/Remy6.png'); }
+.card-back.image-7  { background-image: url('/ad2/Remy7.png'); }
+.card-back.image-8  { background-image: url('/ad2/Remy8.png'); } /* jpg in Dexter pack replaced by png */
+.card-back.image-9  { background-image: url('/ad2/Remy9.png'); }
+.card-back.image-10 { background-image: url('/ad2/Remy10.png'); }
+
+.card-back.image-1,
+.card-back.image-2,
+.card-back.image-3,
+.card-back.image-4,
+.card-back.image-5,
+.card-back.image-6,
+.card-back.image-7,
+.card-back.image-8,
+.card-back.image-9,
+.card-back.image-10 {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 .card-back {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  border-radius: 8px;
-  background-color: #fff; /* fallback color behind images */
-  box-shadow: 0 2px 10px rgba(0,0,0,.08);
+    transform: rotateY(180deg);
 }
 
-/* FRONT: pack logo via --front (no fallback URL) */
-.card-front,
-.front,
-.front-face {
-  background-image: var(--front);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-/* BACKS: 10 faces via --img1..--img10 (no fallbacks) */
-.card-back.image-1  { background-image: var(--img1); }
-.card-back.image-2  { background-image: var(--img2); }
-.card-back.image-3  { background-image: var(--img3); }
-.card-back.image-4  { background-image: var(--img4); }
-.card-back.image-5  { background-image: var(--img5); }
-.card-back.image-6  { background-image: var(--img6); }
-.card-back.image-7  { background-image: var(--img7); }
-.card-back.image-8  { background-image: var(--img8); }
-.card-back.image-9  { background-image: var(--img9); }
-.card-back.image-10 { background-image: var(--img10); }
-
-.card-back {
-  transform: rotateY(180deg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-/* Optional “matched” look */
+/* Matched look */
 .card.matched .card-inner {
-  filter: saturate(1.1);
+    filter: saturate(1.1);
 }
 .card.matched .card-front,
 .card.matched .card-back {
-  box-shadow: 0 0 0 3px #28a745 inset, 0 2px 10px rgba(0,0,0,.12);
+    box-shadow: 0 0 0 3px #28a745 inset, 0 2px 10px rgba(0, 0, 0, .12);
 }
 
-/* ---------- Result / Buttons ---------- */
-.result { margin-top: 10px; }
+/* Result area */
+.result {
+    margin-top: 8px;
+}
 
 .game-over-box {
-  margin: 10px auto 0;
-  padding: 10px;
-  background: #fff;
-  border: 2px solid #28a745;
-  border-radius: 6px;
-  font-size: 1rem;
-  text-align: left;
-  white-space: pre-wrap;
-  max-width: 90%;
+    margin: 8px auto 0;
+    padding: 8px;
+    background: #fff;
+    border: 2px solid #28a745;
+    border-radius: 6px;
+    font-size: 1rem;
+    text-align: left;
+    white-space: pre-wrap;
+    max-width: 90%;
+}
+.game-over-box .prize-message {
+    font-weight: bold;
 }
 
-.game-over-box .prize-message { font-weight: 700; }
-
+/* Button */
 button {
-  padding: 10px 18px;
-  font-size: 1rem;
-  margin: 6px;
-  cursor: pointer;
-  border: none;
-  border-radius: 6px;
-  background: #28a745;
-  color: #fff;
-  transition: filter .15s ease, transform .05s ease;
+    padding: 10px 18px;
+    font-size: 1rem;
+    margin: 6px;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    background: #28a745;
+    color: #fff;
+    transition: filter 0.15s ease, transform 0.05s ease;
 }
 button:hover { filter: brightness(1.05); }
 button:active { transform: translateY(1px); }
 
-/* ---------- Animations ---------- */
-@keyframes flash { 0%{opacity:1} 50%{opacity:.15} 100%{opacity:1} }
+/* Animations */
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0.15; }
+    100% { opacity: 1; }
+}
 @keyframes colorFlash {
-  0% { color: #ffc107; }
-  33% { color: #007bff; }
-  66% { color: #ffff00; }
-  100% { color: #ffc107; }
+    0% { color: #ffc107; }
+    33% { color: #007bff; }
+    66% { color: #ffff00; }
+    100% { color: #ffc107; }
 }
 
-/* ---------- Responsive ---------- */
+/* Responsive */
 @media (max-width: 1024px) {
-  h1 { font-size: 5rem; }
-  h1::before, h1::after { font-size: 3rem; }
-  .instructions { font-size: 1.5rem; }
-  .status { font-size: 1rem; gap: 26px; }
-  .number { font-size: 1.6rem; }
-  .game-board { max-width: 900px; gap: 7px; }
-  .game-over-box { font-size: 0.95rem; }
+    h1 { font-size: 8rem; }
+    h1::before, h1::after { font-size: 3.5rem; }
+    .instructions { font-size: 1.8rem; }
+    .status { font-size: 1rem; gap: 26px; }
+    .number { font-size: 1.6rem; }
+    .game-board { max-width: 900px; gap: 7px; }
+    .game-over-box { font-size: 0.95rem; }
 }
-
 @media (max-width: 767px) {
-  h1 { font-size: 4.5rem; }
-  h1::before, h1::after { font-size: 2.6rem; }
-  .instructions { font-size: 1.25rem; }
-  .status { font-size: 0.9rem; gap: 16px; }
-  .number { font-size: 1.4rem; }
-  .game-board { grid-template-columns: repeat(4, 1fr); max-width: 360px; gap: 6px; }
-  .game-over-box { font-size: 0.9rem; }
-  button { padding: 8px 14px; font-size: 0.9rem; }
+    h1 { font-size: 6rem; }
+    h1::before, h1::after { font-size: 3rem; }
+    .instructions { font-size: 1.25rem; }
+    .status { font-size: 0.9rem; gap: 16px; }
+    .number { font-size: 1.4rem; }
+    .game-board { grid-template-columns: repeat(4, 1fr); max-width: 360px; gap: 6px; }
+    .game-over-box { font-size: 0.9rem; }
+    button { padding: 8px 14px; font-size: 0.9rem; }
 }
-
 @media (max-height: 700px) {
-  .container { padding: 6px; }
-  h1 { font-size: 4rem; margin: 2px 0; }
-  h1::before, h1::after { font-size: 2.2rem; }
-  .instructions { font-size: 1.1rem; margin: 4px 0 8px; }
-  .status { font-size: 0.85rem; gap: 12px; margin: 2px 0 8px; }
-  .number { font-size: 1.2rem; }
-  .game-board { gap: 5px; }
-  .game-over-box { font-size: 0.85rem; }
-  button { padding: 7px 12px; font-size: 0.85rem; }
+    .container { padding: 6px; }
+    h1 { font-size: 4rem; margin: 2px 0; }
+    h1::before, h1::after { font-size: 2.2rem; }
+    .instructions { font-size: 1.1rem; margin: 4px 0 8px; }
+    .status { font-size: 0.85rem; gap: 12px; margin: 2px 0 8px; }
+    .number { font-size: 1.2rem; }
+    .game-board { gap: 5px; }
+    .game-over-box { font-size: 0.85rem; }
+    button { padding: 7px 12px; font-size: 0.85rem; }
+}
+@media (max-height: 700px) and (max-width: 767px) {
+    h1 { font-size: 3.5rem; }
+    h1::before, h1::after { font-size: 2rem; }
+    .instructions { font-size: 1rem; margin: 3px 0; }
+    .status { font-size: 0.8rem; gap: 10px; margin: 2px 0; }
+    .number { font-size: 1.1rem; }
+    .game-board { gap: 4px; }
+    .game-over-box { font-size: 0.8rem; }
+    button { padding: 6px 12px; font-size: 0.8rem; margin: 3px; }
+}
+@media (max-height: 650px) and (max-width: 430px) {
+    h1 { font-size: 3rem; }
+    h1::before, h1::after { font-size: 1.8rem; }
+    .instructions { font-size: 0.95rem; margin: 2px 0; }
+    .status { font-size: 0.75rem; gap: 8px; margin: 2px 0; }
+    .number { font-size: 1rem; }
+    .game-board { gap: 3px; }
+    .result { margin-top: 4px; }
+    .game-over-box { font-size: 0.7rem; }
+    button { padding: 5px 10px; font-size: 0.7rem; margin: 2px; }
 }
