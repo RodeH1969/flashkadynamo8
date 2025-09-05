@@ -46,19 +46,11 @@ h1::after {
     justify-content: center;
     gap: 40px;
     margin: 3px 0;
-    
 }
-.status p {
-    margin: 0;
-}
-.attempts-had {
-    color: #28a745;
-    font-weight: bold;
-}
-.attempts-left {
-    color: #ff8c00;
-    font-weight: bold;
-}
+.status p { margin: 0; }
+
+.attempts-had { color: #28a745; font-weight: bold; }
+.attempts-left { color: #ff8c00; font-weight: bold; }
 .number {
     font-weight: bold;
     color: #000;
@@ -82,9 +74,7 @@ h1::after {
     cursor: pointer;
     user-select: none;
 }
-.card.is-disabled {
-    pointer-events: none;
-}
+.card.is-disabled { pointer-events: none; }
 
 .card-inner {
     position: relative;
@@ -93,9 +83,7 @@ h1::after {
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
 }
-.card.flipped .card-inner {
-    transform: rotateY(180deg);
-}
+.card.flipped .card-inner { transform: rotateY(180deg); }
 
 .card-face {
     position: absolute;
@@ -106,7 +94,7 @@ h1::after {
     box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
 }
 
-/* FRONT: Dexter logo on every card (remapped to Remy) */
+/* FRONT: sponsor logo on every card (Remy) */
 .card-front {
     background-image: url('/ad2/Remy_logo.png');
     background-size: cover;
@@ -114,7 +102,7 @@ h1::after {
     background-repeat: no-repeat;
 }
 
-/* BACKS: Dexter1–Dexter10, hooked by script.js classes (remapped to Remy1..10) */
+/* BACKS: 10 Remy images (script.js adds .image-1..10) */
 .card-back.image-1  { background-image: url('/ad2/Remy1.png'); }
 .card-back.image-2  { background-image: url('/ad2/Remy2.png'); }
 .card-back.image-3  { background-image: url('/ad2/Remy3.png'); }
@@ -122,7 +110,7 @@ h1::after {
 .card-back.image-5  { background-image: url('/ad2/Remy5.png'); }
 .card-back.image-6  { background-image: url('/ad2/Remy6.png'); }
 .card-back.image-7  { background-image: url('/ad2/Remy7.png'); }
-.card-back.image-8  { background-image: url('/ad2/Remy8.png'); } /* jpg in Dexter pack replaced by png */
+.card-back.image-8  { background-image: url('/ad2/Remy8.png'); }
 .card-back.image-9  { background-image: url('/ad2/Remy9.png'); }
 .card-back.image-10 { background-image: url('/ad2/Remy10.png'); }
 
@@ -141,23 +129,21 @@ h1::after {
     background-repeat: no-repeat;
 }
 
-.card-back {
-    transform: rotateY(180deg);
-}
+.card-back { transform: rotateY(180deg); }
 
-/* Matched look */
-.card.matched .card-inner {
-    filter: saturate(1.1);
-}
+/* ✅ FIX: keep matched pairs face-up (show the backs), and disable clicks */
+.card.matched .card-inner { transform: rotateY(180deg) !important; }
+.card.matched { pointer-events: none; }
+
+/* “Matched” styling */
+.card.matched .card-inner { filter: saturate(1.1); }
 .card.matched .card-front,
 .card.matched .card-back {
     box-shadow: 0 0 0 3px #28a745 inset, 0 2px 10px rgba(0, 0, 0, .12);
 }
 
 /* Result area */
-.result {
-    margin-top: 8px;
-}
+.result { margin-top: 8px; }
 
 .game-over-box {
     margin: 8px auto 0;
@@ -170,11 +156,9 @@ h1::after {
     white-space: pre-wrap;
     max-width: 90%;
 }
-.game-over-box .prize-message {
-    font-weight: bold;
-}
+.game-over-box .prize-message { font-weight: bold; }
 
-/* Button */
+/* Buttons */
 button {
     padding: 10px 18px;
     font-size: 1rem;
@@ -184,7 +168,7 @@ button {
     border-radius: 6px;
     background: #28a745;
     color: #fff;
-    transition: filter 0.15s ease, transform 0.05s ease;
+    transition: filter .15s ease, transform .05s ease;
 }
 button:hover { filter: brightness(1.05); }
 button:active { transform: translateY(1px); }
@@ -192,7 +176,7 @@ button:active { transform: translateY(1px); }
 /* Animations */
 @keyframes flash {
     0% { opacity: 1; }
-    50% { opacity: 0.15; }
+    50% { opacity: .15; }
     100% { opacity: 1; }
 }
 @keyframes colorFlash {
@@ -210,47 +194,47 @@ button:active { transform: translateY(1px); }
     .status { font-size: 1rem; gap: 26px; }
     .number { font-size: 1.6rem; }
     .game-board { max-width: 900px; gap: 7px; }
-    .game-over-box { font-size: 0.95rem; }
+    .game-over-box { font-size: .95rem; }
 }
 @media (max-width: 767px) {
     h1 { font-size: 6rem; }
     h1::before, h1::after { font-size: 3rem; }
     .instructions { font-size: 1.25rem; }
-    .status { font-size: 0.9rem; gap: 16px; }
+    .status { font-size: .9rem; gap: 16px; }
     .number { font-size: 1.4rem; }
     .game-board { grid-template-columns: repeat(4, 1fr); max-width: 360px; gap: 6px; }
-    .game-over-box { font-size: 0.9rem; }
-    button { padding: 8px 14px; font-size: 0.9rem; }
+    .game-over-box { font-size: .9rem; }
+    button { padding: 8px 14px; font-size: .9rem; }
 }
 @media (max-height: 700px) {
     .container { padding: 6px; }
     h1 { font-size: 4rem; margin: 2px 0; }
     h1::before, h1::after { font-size: 2.2rem; }
     .instructions { font-size: 1.1rem; margin: 4px 0 8px; }
-    .status { font-size: 0.85rem; gap: 12px; margin: 2px 0 8px; }
+    .status { font-size: .85rem; gap: 12px; margin: 2px 0 8px; }
     .number { font-size: 1.2rem; }
     .game-board { gap: 5px; }
-    .game-over-box { font-size: 0.85rem; }
-    button { padding: 7px 12px; font-size: 0.85rem; }
+    .game-over-box { font-size: .85rem; }
+    button { padding: 7px 12px; font-size: .85rem; }
 }
 @media (max-height: 700px) and (max-width: 767px) {
     h1 { font-size: 3.5rem; }
     h1::before, h1::after { font-size: 2rem; }
     .instructions { font-size: 1rem; margin: 3px 0; }
-    .status { font-size: 0.8rem; gap: 10px; margin: 2px 0; }
+    .status { font-size: .8rem; gap: 10px; margin: 2px 0; }
     .number { font-size: 1.1rem; }
     .game-board { gap: 4px; }
-    .game-over-box { font-size: 0.8rem; }
-    button { padding: 6px 12px; font-size: 0.8rem; margin: 3px; }
+    .game-over-box { font-size: .8rem; }
+    button { padding: 6px 12px; font-size: .8rem; margin: 3px; }
 }
 @media (max-height: 650px) and (max-width: 430px) {
     h1 { font-size: 3rem; }
     h1::before, h1::after { font-size: 1.8rem; }
-    .instructions { font-size: 0.95rem; margin: 2px 0; }
-    .status { font-size: 0.75rem; gap: 8px; margin: 2px 0; }
+    .instructions { font-size: .95rem; margin: 2px 0; }
+    .status { font-size: .75rem; gap: 8px; margin: 2px 0; }
     .number { font-size: 1rem; }
     .game-board { gap: 3px; }
     .result { margin-top: 4px; }
-    .game-over-box { font-size: 0.7rem; }
-    button { padding: 5px 10px; font-size: 0.7rem; margin: 2px; }
+    .game-over-box { font-size: .7rem; }
+    button { padding: 5px 10px; font-size: .7rem; margin: 2px; }
 }
