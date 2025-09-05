@@ -1,115 +1,120 @@
 @import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
 
-/* ====== Base ====== */
-* { box-sizing: border-box; }
-html, body { height: 100%; }
 body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f0f0f0;
-  color: #111;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
 }
 
-.container { text-align: center; max-width: 100%; padding: 8px; }
+.container {
+    text-align: center;
+    max-width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
 
 h1 {
-  font-family: 'Bangers', cursive;
-  font-size: 10rem;
-  color: #28a745;
-  margin: 3px 0;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
+    font-family: 'Bangers', cursive;
+    font-size: 6.25rem;
+    color: #28a745;
+    margin: 3px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
-h1::before, h1::after {
-  content: '⚡';
-  color: #ffc107;
-  font-size: 4rem;
-  animation: flash 3s infinite, colorFlash 3s infinite;
+
+h1::before,
+h1::after {
+    content: '⚡';
+    color: #ffc107;
+    font-size: 3.75rem;
+    animation-name: flash, colorFlash;
+    animation-duration: 3s, 3s;
+    animation-iteration-count: infinite, infinite;
 }
 
 .instructions {
-  font-size: 2rem;
-  color: #000;
-  font-weight: 700;
-  font-style: italic;
-  margin: 3px 0;
+    font-size: 2rem;
+    color: black;
+    font-weight: bold;
+    font-style: italic;
+    margin: 3px 0;
 }
 
 .status {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 40px;
-  margin: 3px 0;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 3px 0;
+    font-size: 1.2rem;
 }
-.status p { margin: 0; }
-.attempts-had { color: #28a745; font-weight: 700; }
-.attempts-left { color: #ff8c00; font-weight: 700; }
-.number { font-size: 2rem; font-weight: 800; animation: flash 3s infinite; }
 
-/* ====== Board & Cards ====== */
+.attempts-had {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.attempts-left {
+    color: #ff8c00;
+    font-weight: bold;
+}
+
+.number {
+    font-size: 2rem;
+    font-weight: bold;
+    animation: flash 3s infinite;
+}
+
 .game-board {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  width: 95vw;
-  max-width: 760px;
-  margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    width: 90vw;
+    max-width: 750px;
+    margin: 0 auto;
 }
 
 .card {
-  width: 100%;
-  aspect-ratio: 1;
-  perspective: 1000px;
-  cursor: pointer;
-  user-select: none;
+    width: 100%;
+    aspect-ratio: 1;
+    perspective: 1000px;
+    cursor: pointer;
 }
-.card.is-disabled { pointer-events: none; }
 
 .card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
 }
 
-/* Base faces */
-.card-face {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform-style: preserve-3d;
-  border-radius: 8px;
-  background-color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, .08);
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
 }
 
-/* Flip on click (JS adds .flipped) */
-.card.flipped .card-inner { transform: rotateY(180deg); }
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 5px;
+}
 
-/* FRONT: sponsor logo (Remy) */
+/* FRONT: Remy logo on every card (ad2) */
 .card-front {
-  background-image: url('/ad2/Remy_logo.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+    background-image: url('/ad2/Remy_logo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* BACK: rotated so it reads correctly when flipped */
-.card-back {
-  transform: rotateY(180deg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-
-/* Back images 1..10 (Remy pack) */
+/* BACKS: Remy1–Remy10 (ad2), hooked by script.js classes */
 .card-back.image-1  { background-image: url('/ad2/Remy1.png'); }
 .card-back.image-2  { background-image: url('/ad2/Remy2.png'); }
 .card-back.image-3  { background-image: url('/ad2/Remy3.png'); }
@@ -121,106 +126,233 @@ h1::before, h1::after {
 .card-back.image-9  { background-image: url('/ad2/Remy9.png'); }
 .card-back.image-10 { background-image: url('/ad2/Remy10.png'); }
 
-/* Matched visual accent */
-.card.matched .card-inner { filter: saturate(1.1); }
-.card.matched .card-front,
-.card.matched .card-back {
-  box-shadow: 0 0 0 3px #28a745 inset, 0 2px 10px rgba(0,0,0,.12);
+.card-back.image-1,
+.card-back.image-2,
+.card-back.image-3,
+.card-back.image-4,
+.card-back.image-5,
+.card-back.image-6,
+.card-back.image-7,
+.card-back.image-8,
+.card-back.image-9,
+.card-back.image-10 {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* ====== Result / Buttons ====== */
-.result { margin-top: 8px; }
-.game-over-box {
-  margin: 8px auto 0;
-  padding: 8px;
-  background: #fff;
-  border: 2px solid #28a745;
-  border-radius: 6px;
-  font-size: 1rem;
-  text-align: left;
-  white-space: pre-wrap;
-  max-width: 90%;
+/* Back face must be rotated so it reads correctly when flipped */
+.card-back {
+    transform: rotateY(180deg);
 }
-.game-over-box .prize-message { font-weight: 700; }
+
+.card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.result {
+    margin-top: 10px;
+}
+
+.game-over-box {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 2px solid #28a745;
+    border-radius: 5px;
+    font-size: 1rem;
+    white-space: pre-wrap;
+    text-align: left;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.game-over-box .prize-message {
+    font-weight: bold;
+}
 
 button {
-  padding: 10px 18px;
-  font-size: 1rem;
-  margin: 6px;
-  cursor: pointer;
-  border: none;
-  border-radius: 6px;
-  background: #28a745;
-  color: #fff;
-  transition: filter .15s ease, transform .05s ease;
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: #28a745;
+    color: white;
 }
-button:hover { filter: brightness(1.05); }
-button:active { transform: translateY(1px); }
 
-/* ====== Animations ====== */
-@keyframes flash { 0%{opacity:1} 50%{opacity:.15} 100%{opacity:1} }
+button:hover {
+    background-color: #218838;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 @keyframes colorFlash {
-  0% { color: #ffc107; }
-  33% { color: #007bff; }
-  66% { color: #ffff00; }
-  100% { color: #ffc107; }
+    0% { color: #ffc107; }
+    33% { color: #007bff; }
+    66% { color: #ffff00; }
+    100% { color: #ffc107; }
 }
 
-/* ====== Responsive ====== */
 @media (max-width: 1024px) {
-  h1 { font-size: 8rem; }
-  h1::before, h1::after { font-size: 3.5rem; }
-  .instructions { font-size: 1.8rem; }
-  .status { font-size: 1rem; gap: 26px; }
-  .number { font-size: 1.6rem; }
-  .game-board { max-width: 900px; gap: 7px; }
-  .game-over-box { font-size: .95rem; }
+    h1 {
+        font-size: 5rem;
+    }
+    h1::before,
+    h1::after {
+        font-size: 3.25rem;
+    }
+    .instructions {
+        font-size: 1.8rem;
+    }
+    .status {
+        font-size: 1rem;
+        gap: 25px;
+    }
+    .number {
+        font-size: 1.8rem;
+    }
+    .game-board {
+        max-width: 900px;
+        gap: 7px;
+    }
+    .result {
+        margin-top: 8px;
+    }
+    .game-over-box {
+        font-size: 0.9rem;
+    }
+    button {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
 }
+
 @media (max-width: 767px) {
-  h1 { font-size: 6rem; }
-  h1::before, h1::after { font-size: 3rem; }
-  .instructions { font-size: 1.25rem; }
-  .status { font-size: .9rem; gap: 16px; }
-  .number { font-size: 1.4rem; }
-  .game-board { grid-template-columns: repeat(4, 1fr); max-width: 360px; gap: 6px; }
-  .game-over-box { font-size: .9rem; }
-  button { padding: 8px 14px; font-size: .9rem; }
+    h1 {
+        font-size: 5.5rem;
+    }
+    h1::before,
+    h1::after {
+        font-size: 3.75rem;
+    }
+    .instructions {
+        font-size: 1.5rem;
+    }
+    .status {
+        font-size: 0.8rem;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        margin: 2px 0;
+    }
+    .number {
+        font-size: 1.5rem;
+    }
+    .game-board {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 360px;
+        gap: 5px;
+    }
+    .result {
+        margin-top: 6px;
+    }
+    .game-over-box {
+        font-size: 0.8rem;
+    }
+    button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        margin: 3px;
+    }
 }
+
 @media (max-height: 700px) {
-  .container { padding: 6px; }
-  h1 { font-size: 4rem; margin: 2px 0; }
-  h1::before, h1::after { font-size: 2.2rem; }
-  .instructions { font-size: 1.1rem; margin: 4px 0 8px; }
-  .status { font-size: .85rem; gap: 12px; margin: 2px 0 8px; }
-  .number { font-size: 1.2rem; }
-  .game-board { gap: 5px; }
-  .game-over-box { font-size: .85rem; }
-  button { padding: 7px 12px; font-size: .85rem; }
+    .container {
+        padding: 6px;
+    }
+    h1 {
+        font-size: 4.5rem;
+        margin: 2px 0;
+    }
+    h1::before,
+    h1::after {
+        font-size: 2.75rem;
+    }
+    .instructions {
+        font-size: 1.3rem;
+    }
+    .status {
+        font-size: 0.9rem;
+        gap: 12px;
+        margin: 2px 0;
+    }
+    .number {
+        font-size: 1.3rem;
+    }
+    .game-board {
+        gap: 4px;
+    }
+    .result {
+        margin-top: 6px;
+    }
+    .game-over-box {
+        font-size: 0.8rem;
+    }
+    button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        margin: 3px;
+    }
 }
 
-/* ====== BULLET-PROOF FLIP MODEL ======
-   Ensures matched pairs stay face-up (backs visible),
-   and prevents mirrored logo from showing again.
-======================================= */
-
-/* 1) Both flipped and matched states rotate the inner 180deg */
-.card.flipped .card-inner,
-.card.matched .card-inner {
-  transform: rotateY(180deg) !important;
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease;
+@media (max-height: 700px) and (max-width: 767px) {
+    h1 {
+        font-size: 4rem;
+        margin: 1px 0;
+    }
+    h1::before,
+    h1::after {
+        font-size: 2.5rem;
+    }
+    .instructions {
+        font-size: 1.2rem;
+    }
+    .status {
+        font-size: 0.7rem;
+        gap: 10px;
+        margin: 1px 0;
+    }
+    .number {
+        font-size: 1.2rem;
+    }
+    .game-board {
+        gap: 3px;
+    }
+    .result {
+        margin-top: 4px;
+    }
+    .game-over-box {
+        font-size: 0.7rem;
+    }
+    button {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+        margin: 2px;
+    }
 }
-
-/* 2) Faces hide their reverse side */
-.card-front,
-.card-back {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform-style: preserve-3d;
-}
-
-/* 3) Back face is rotated so it reads correct when inner flips */
-.card-back { transform: rotateY(180deg); }
-
-/* 4) Matched cards are non-interactive */
-.card.matched { pointer-events: none; }
