@@ -84,6 +84,9 @@ h1::after {
     aspect-ratio: 1;
     perspective: 1000px;
     cursor: pointer;
+    border: none;
+    background: transparent;
+    padding: 0;
 }
 
 .card-inner {
@@ -98,55 +101,32 @@ h1::after {
     transform: rotateY(180deg);
 }
 
-.card-front, .card-back {
+.card-face {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
     border-radius: 5px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* FRONT: Remy logo on every card */
 .card-front {
-    background-image: url('/ad2/Remy_logo.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-color: #333;
 }
 
-/* BACKS: Remy1–Remy8 for 8 pairs */
-.card-back.image-1  { background-image: url('/ad2/Remy1.png'); }
-.card-back.image-2  { background-image: url('/ad2/Remy2.png'); }
-.card-back.image-3  { background-image: url('/ad2/Remy3.png'); }
-.card-back.image-4  { background-image: url('/ad2/Remy4.png'); }
-.card-back.image-5  { background-image: url('/ad2/Remy5.png'); }
-.card-back.image-6  { background-image: url('/ad2/Remy6.png'); }
-.card-back.image-7  { background-image: url('/ad2/Remy7.png'); }
-.card-back.image-8  { background-image: url('/ad2/Remy8.png'); }
-
-.card-back.image-1,
-.card-back.image-2,
-.card-back.image-3,
-.card-back.image-4,
-.card-back.image-5,
-.card-back.image-6,
-.card-back.image-7,
-.card-back.image-8 {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-/* Back face must be rotated so it reads correctly when flipped */
 .card-back {
     transform: rotateY(180deg);
+    background-color: #666;
 }
 
-.card-back img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 5px;
+.card.matched {
+    opacity: 0.6;
+}
+
+.card:disabled {
+    cursor: not-allowed;
 }
 
 .result {
@@ -294,61 +274,4 @@ button:hover {
         font-size: 1.3rem;
     }
     .status {
-        font-size: 0.9rem;
-        gap: 12px;
-        margin: 2px 0;
-    }
-    .number {
-        font-size: 1.3rem;
-    }
-    .game-board {
-        gap: 4px;
-    }
-    .result {
-        margin-top: 6px;
-    }
-    .game-over-box {
-        font-size: 0.8rem;
-    }
-    button {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-        margin: 3px;
-    }
-}
-
-@media (max-height: 700px) and (max-width: 767px) {
-    h1 {
-        font-size: 4rem;
-        margin: 1px 0;
-    }
-    h1::before,
-    h1::after {
-        font-size: 2.5rem;
-    }
-    .instructions {
-        font-size: 1.2rem;
-    }
-    .status {
-        font-size: 0.7rem;
-        gap: 10px;
-        margin: 1px 0;
-    }
-    .number {
-        font-size: 1.2rem;
-    }
-    .game-board {
-        gap: 3px;
-    }
-    .result {
-        margin-top: 4px;
-    }
-    .game-over-box {
-        font-size: 0.7rem;
-    }
-    button {
-        padding: 5px 10px;
-        font-size: 0.7rem;
-        margin: 2px;
-    }
-}
+        font-size: 0.9

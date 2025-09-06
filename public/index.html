@@ -8,15 +8,42 @@
   <!-- Prevent favicon 404 -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
 
-  <link rel="stylesheet" href="style.css" />
-  <script defer src="script.js"></script>
+  <!-- Base game styles (flip logic etc.). Do NOT change this file when switching ads -->
+  <link rel="stylesheet" href="/css/style.css?v=base-21" />
+
+  <!-- Pack override (images only). Change this ONE line to swap sponsors -->
+  <link id="pack-css" rel="stylesheet" href="/css/packs/ad2.css?v=1"><!-- default Remy -->
+
+  <!-- (Optional) Allow kiosk/query to select pack safely via ?pack=adN or ?ad=N -->
+  <script>
+    (function () {
+      try {
+        var q = new URLSearchParams(location.search);
+        var p = (q.get('pack') || q.get('ad') || '').toLowerCase().trim();
+        if (/^[1-7]$/.test(p)) p = 'ad' + p;
+        if (/^ad[1-7]$/.test(p)) {
+          var el = document.getElementById('pack-css');
+          if (el) el.href = '/css/packs/' + p + '.css?v=1';
+        }
+      } catch (e) { /* ignore */ }
+    })();
+  </script>
+
+  <!-- Winner/Loser FX (keep if you use them) -->
+  <link rel="stylesheet" href="/css/winfx.css?v=fx" />
+  <link rel="stylesheet" href="/css/losefx.css?v=fx" />
+
+  <!-- Game scripts (unchanged) -->
+  <script defer src="/js/script.js?v=21"></script>
+  <script defer src="/js/winfx.js?v=fx"></script>
+  <script defer src="/js/losefx.js?v=fx"></script>
 </head>
 <body>
   <div class="container">
     <h1>Flashka</h1>
 
     <p class="instructions">
-      Use your memory skills to match the <strong>8 images</strong> in <strong>17 card flips</strong> or less to win a CHOCCY surprise with your coffee!
+      Use your memory skills to match the 8 images in 17 card flips or less to win a CHOCCY surprise with your coffee!
     </p>
 
     <div class="status">
@@ -28,6 +55,9 @@
 
     <div class="result" id="result" style="display:none;">
       <p id="result-message"></p>
+      <p id="times-played"></p>
+      <div id="game-over-box" class="game-over-box"></div>
+      <!-- Shown only on WIN -->
       <button id="share-btn" style="display:none">Send SMS</button>
     </div>
   </div>

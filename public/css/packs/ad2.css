@@ -1,18 +1,32 @@
-/* Ad Pack 2 – Remy, 8 images only */
+/* AD2 Pack: Remy Images */
 
-.card-back {
-  background-image: url("/ad2/Remy_logo.png");
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+/* FRONT: Remy logo on every card */
+.card-front {
+    background-image: url('/ad2/Remy_logo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-/* Only 1–8 */
-.card[data-card="1"] .card-front { background-image: url("/ad2/Remy1.png"); }
-.card[data-card="2"] .card-front { background-image: url("/ad2/Remy2.png"); }
-.card[data-card="3"] .card-front { background-image: url("/ad2/Remy3.png"); }
-.card[data-card="4"] .card-front { background-image: url("/ad2/Remy4.png"); }
-.card[data-card="5"] .card-front { background-image: url("/ad2/Remy5.png"); }
-.card[data-card="6"] .card-front { background-image: url("/ad2/Remy6.png"); }
-.card[data-card="7"] .card-front { background-image: url("/ad2/Remy7.png"); }
-.card[data-card="8"] .card-front { background-image: url("/ad2/Remy8.png"); }
+/* BACKS: Remy1–Remy8 (for 8 pairs = 16 cards) */
+.card-back.image-1  { background-image: url('/ad2/Remy1.png'); }
+.card-back.image-2  { background-image: url('/ad2/Remy2.png'); }
+.card-back.image-3  { background-image: url('/ad2/Remy3.png'); }
+.card-back.image-4  { background-image: url('/ad2/Remy4.png'); }
+.card-back.image-5  { background-image: url('/ad2/Remy5.png'); }
+.card-back.image-6  { background-image: url('/ad2/Remy6.png'); }
+.card-back.image-7  { background-image: url('/ad2/Remy7.png'); }
+.card-back.image-8  { background-image: url('/ad2/Remy8.png'); }
+
+.card-back.image-1,
+.card-back.image-2,
+.card-back.image-3,
+.card-back.image-4,
+.card-back.image-5,
+.card-back.image-6,
+.card-back.image-7,
+.card-back.image-8 {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
