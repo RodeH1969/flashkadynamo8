@@ -39,7 +39,7 @@ h1::after {
 }
 
 .instructions {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: black;
     font-weight: bold;
     font-style: italic;
@@ -194,7 +194,7 @@ button:hover {
         font-size: 3.25rem;
     }
     .instructions {
-        font-size: 1.8rem;
+        font-size: 1.3rem;
     }
     .status {
         font-size: 1rem;
@@ -228,7 +228,7 @@ button:hover {
         font-size: 3.75rem;
     }
     .instructions {
-        font-size: 1.5rem;
+        font-size: 1.1rem;
     }
     .status {
         font-size: 0.8rem;
@@ -242,8 +242,8 @@ button:hover {
     }
     .game-board {
         grid-template-columns: repeat(4, 1fr);
-        max-width: 360px;
-        gap: 5px;
+        max-width: 85vw;
+        gap: 3px;
     }
     .result {
         margin-top: 6px;
@@ -274,4 +274,61 @@ button:hover {
         font-size: 1.3rem;
     }
     .status {
-        font-size: 0.9
+        font-size: 0.9rem;
+        gap: 12px;
+        margin: 2px 0;
+    }
+    .number {
+        font-size: 1.3rem;
+    }
+    .game-board {
+        gap: 4px;
+    }
+    .result {
+        margin-top: 6px;
+    }
+    .game-over-box {
+        font-size: 0.8rem;
+    }
+    button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        margin: 3px;
+    }
+}
+
+@media (max-height: 700px) and (max-width: 767px) {
+    h1 {
+        font-size: 4rem;
+        margin: 1px 0;
+    }
+    h1::before,
+    h1::after {
+        font-size: 2.5rem;
+    }
+    .instructions {
+        font-size: 1.2rem;
+    }
+    .status {
+        font-size: 0.7rem;
+        gap: 10px;
+        margin: 1px 0;
+    }
+    .number {
+        font-size: 1.2rem;
+    }
+    .game-board {
+        gap: 3px;
+    }
+    .result {
+        margin-top: 4px;
+    }
+    .game-over-box {
+        font-size: 0.7rem;
+    }
+    button {
+        padding: 5px 10px;
+        font-size: 0.7rem;
+        margin: 2px;
+    }
+}
