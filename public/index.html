@@ -8,27 +8,8 @@
   <!-- Prevent favicon 404 -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
 
-  <!-- Base game styles -->
-  <link rel="stylesheet" href="/css/style.css?v=base-16" />
-
-  <!-- Default ad pack CSS = ad1 (Dexter) -->
-  <link id="pack-css" rel="stylesheet" href="/css/packs/ad1.css?v=1">
-
-  <script>
-    // Allow forcing an ad pack by ?ad=N or ?pack=adN
-    (function () {
-      try {
-        const q = new URLSearchParams(location.search);
-        let p = (q.get("pack") || q.get("ad") || "").toLowerCase().trim();
-        if (/^[1-7]$/.test(p)) p = "ad" + p;
-        if (/^ad[1-7]$/.test(p)) {
-          document.getElementById("pack-css").href = "/css/packs/" + p + ".css?v=1";
-        }
-      } catch (e) {}
-    })();
-  </script>
-
-  <script defer src="/js/script.js?v=16"></script>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
 </head>
 <body>
   <div class="container">
@@ -47,8 +28,6 @@
 
     <div class="result" id="result" style="display:none;">
       <p id="result-message"></p>
-      <p id="times-played"></p>
-      <div id="game-over-box" class="game-over-box"></div>
       <button id="share-btn" style="display:none">Send SMS</button>
     </div>
   </div>

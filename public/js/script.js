@@ -44,6 +44,7 @@ function createBoard() {
 
     const back = document.createElement("div");
     back.classList.add("card-back");
+    back.classList.add(`image-${num}`);
 
     inner.appendChild(front);
     inner.appendChild(back);
@@ -108,6 +109,13 @@ function endGame(won) {
   if (won) {
     resultMsg.textContent = "Congratulations! You won a choccy!";
     document.getElementById("share-btn").style.display = "inline-block";
+    
+    // SMS functionality
+    const shareBtn = document.getElementById("share-btn");
+    shareBtn.onclick = () => {
+      const smsBody = "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 17 moves!!";
+      window.location.href = `sms:?&body=${encodeURIComponent(smsBody)}`;
+    };
   } else {
     resultMsg.textContent = "Oh shucks! Out of attempts. Try again tomorrow!";
   }

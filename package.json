@@ -1,12 +1,13 @@
 {
   "name": "flashka-project",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Flashka memory card game - 8 pairs, 17 attempts",
+  "main": "server.js",
   "scripts": {
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["memory", "game", "flashka", "cards"],
   "author": "",
   "license": "ISC",
   "dependencies": {

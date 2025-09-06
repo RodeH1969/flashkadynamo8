@@ -72,10 +72,10 @@ h1::after {
 
 .game-board {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 8px;
     width: 90vw;
-    max-width: 750px;
+    max-width: 600px;
     margin: 0 auto;
 }
 
@@ -106,7 +106,7 @@ h1::after {
     border-radius: 5px;
 }
 
-/* FRONT: Remy logo on every card (ad2) */
+/* FRONT: Remy logo on every card */
 .card-front {
     background-image: url('/ad2/Remy_logo.png');
     background-size: cover;
@@ -114,7 +114,7 @@ h1::after {
     background-repeat: no-repeat;
 }
 
-/* BACKS: Remy1–Remy10 (ad2), hooked by script.js classes */
+/* BACKS: Remy1–Remy8 for 8 pairs */
 .card-back.image-1  { background-image: url('/ad2/Remy1.png'); }
 .card-back.image-2  { background-image: url('/ad2/Remy2.png'); }
 .card-back.image-3  { background-image: url('/ad2/Remy3.png'); }
@@ -123,8 +123,6 @@ h1::after {
 .card-back.image-6  { background-image: url('/ad2/Remy6.png'); }
 .card-back.image-7  { background-image: url('/ad2/Remy7.png'); }
 .card-back.image-8  { background-image: url('/ad2/Remy8.png'); }
-.card-back.image-9  { background-image: url('/ad2/Remy9.png'); }
-.card-back.image-10 { background-image: url('/ad2/Remy10.png'); }
 
 .card-back.image-1,
 .card-back.image-2,
@@ -133,9 +131,7 @@ h1::after {
 .card-back.image-5,
 .card-back.image-6,
 .card-back.image-7,
-.card-back.image-8,
-.card-back.image-9,
-.card-back.image-10 {
+.card-back.image-8 {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -228,7 +224,7 @@ button:hover {
         font-size: 1.8rem;
     }
     .game-board {
-        max-width: 900px;
+        max-width: 500px;
         gap: 7px;
     }
     .result {
