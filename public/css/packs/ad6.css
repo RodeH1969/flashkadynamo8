@@ -1,15 +1,32 @@
-/* Ad Pack 6 – MAFS (alt), 8 images */
-.card-back {
-  background-image: url("/ad6/MAFS_logo.png");
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+/* AD6 Pack: MAFS Images */
+
+/* FRONT: MAFS logo on every card */
+.card-front {
+    background-image: url('/ad6/MAFS_logo.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
-.card[data-card="1"] .card-front { background-image: url("/ad6/MAFS1.png"); }
-.card[data-card="2"] .card-front { background-image: url("/ad6/MAFS2.png"); }
-.card[data-card="3"] .card-front { background-image: url("/ad6/MAFS3.png"); }
-.card[data-card="4"] .card-front { background-image: url("/ad6/MAFS4.png"); }
-.card[data-card="5"] .card-front { background-image: url("/ad6/MAFS5.png"); }
-.card[data-card="6"] .card-front { background-image: url("/ad6/MAFS6.png"); }
-.card[data-card="7"] .card-front { background-image: url("/ad6/MAFS7.png"); }
-.card[data-card="8"] .card-front { background-image: url("/ad6/MAFS8.png"); }
+
+/* BACKS: MAFS1–MAFS8 (for 8 pairs = 16 cards) */
+.card-back.image-1  { background-image: url('/ad6/MAFS1.png'); }
+.card-back.image-2  { background-image: url('/ad6/MAFS2.png'); }
+.card-back.image-3  { background-image: url('/ad6/MAFS3.png'); }
+.card-back.image-4  { background-image: url('/ad6/MAFS4.png'); }
+.card-back.image-5  { background-image: url('/ad6/MAFS5.png'); }
+.card-back.image-6  { background-image: url('/ad6/MAFS6.png'); }
+.card-back.image-7  { background-image: url('/ad6/MAFS7.png'); }
+.card-back.image-8  { background-image: url('/ad6/MAFS8.png'); }
+
+.card-back.image-1,
+.card-back.image-2,
+.card-back.image-3,
+.card-back.image-4,
+.card-back.image-5,
+.card-back.image-6,
+.card-back.image-7,
+.card-back.image-8 {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
