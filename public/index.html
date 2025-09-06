@@ -8,47 +8,39 @@
   <!-- Prevent favicon 404 -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
 
-  <!-- Base game styles (flip logic etc.). Do NOT change this file when switching ads -->
-  <link rel="stylesheet" href="/css/style.css?v=base-21" />
+  <!-- Base game styles -->
+  <link rel="stylesheet" href="/css/style.css?v=base-16" />
 
-  <!-- Pack override (images only). Change this ONE line to swap sponsors -->
-  <link id="pack-css" rel="stylesheet" href="/css/packs/ad2.css?v=1"><!-- default Remy -->
+  <!-- Default ad pack CSS = ad1 (Dexter) -->
+  <link id="pack-css" rel="stylesheet" href="/css/packs/ad1.css?v=1">
 
-  <!-- (Optional) Allow kiosk/query to select pack safely via ?pack=adN or ?ad=N -->
   <script>
+    // Allow forcing an ad pack by ?ad=N or ?pack=adN
     (function () {
       try {
-        var q = new URLSearchParams(location.search);
-        var p = (q.get('pack') || q.get('ad') || '').toLowerCase().trim();
-        if (/^[1-7]$/.test(p)) p = 'ad' + p;
+        const q = new URLSearchParams(location.search);
+        let p = (q.get("pack") || q.get("ad") || "").toLowerCase().trim();
+        if (/^[1-7]$/.test(p)) p = "ad" + p;
         if (/^ad[1-7]$/.test(p)) {
-          var el = document.getElementById('pack-css');
-          if (el) el.href = '/css/packs/' + p + '.css?v=1';
+          document.getElementById("pack-css").href = "/css/packs/" + p + ".css?v=1";
         }
-      } catch (e) { /* ignore */ }
+      } catch (e) {}
     })();
   </script>
 
-  <!-- Winner/Loser FX (keep if you use them) -->
-  <link rel="stylesheet" href="/css/winfx.css?v=fx" />
-  <link rel="stylesheet" href="/css/losefx.css?v=fx" />
-
-  <!-- Game scripts (unchanged) -->
-  <script defer src="/js/script.js?v=21"></script>
-  <script defer src="/js/winfx.js?v=fx"></script>
-  <script defer src="/js/losefx.js?v=fx"></script>
+  <script defer src="/js/script.js?v=16"></script>
 </head>
 <body>
   <div class="container">
     <h1>Flashka</h1>
 
     <p class="instructions">
-      Use your memory skills to match the 10 images in 21 card flips or less to win a CHOCCY surprise with your coffee!
+      Use your memory skills to match the <strong>8 images</strong> in <strong>17 card flips</strong> or less to win a CHOCCY surprise with your coffee!
     </p>
 
     <div class="status">
       <p class="attempts-had">Attempts Had: <span class="number" id="attempts">0</span></p>
-      <p class="attempts-left">Attempts Left: <span class="number" id="attempts-left">21</span></p>
+      <p class="attempts-left">Attempts Left: <span class="number" id="attempts-left">17</span></p>
     </div>
 
     <div class="game-board" id="game-board"></div>
@@ -57,7 +49,6 @@
       <p id="result-message"></p>
       <p id="times-played"></p>
       <div id="game-over-box" class="game-over-box"></div>
-      <!-- Shown only on WIN -->
       <button id="share-btn" style="display:none">Send SMS</button>
     </div>
   </div>

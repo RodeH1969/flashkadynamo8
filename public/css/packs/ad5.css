@@ -1,12 +1,15 @@
-/* Dexter */
-.card-front{background-image:url('/ad5/Dexter_logo.png') !important;}
-.card-back.image-1{background-image:url('/ad5/Dexter1.png') !important;}
-.card-back.image-2{background-image:url('/ad5/Dexter2.png') !important;}
-.card-back.image-3{background-image:url('/ad5/Dexter3.png') !important;}
-.card-back.image-4{background-image:url('/ad5/Dexter4.png') !important;}
-.card-back.image-5{background-image:url('/ad5/Dexter5.png') !important;}
-.card-back.image-6{background-image:url('/ad5/Dexter6.png') !important;}
-.card-back.image-7{background-image:url('/ad5/Dexter7.png') !important;}
-.card-back.image-8{background-image:url('/ad5/Dexter8.png') !important;}
-.card-back.image-9{background-image:url('/ad5/Dexter9.png') !important;}
-.card-back.image-10{background-image:url('/ad5/Dexter10.png') !important;}
+/* Ad Pack 5 – Dexter (alt), 8 images */
+.card-back {
+  background-image: url("/ad5/Dexter_logo.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.card[data-card="1"] .card-front { background-image: url("/ad5/Dexter1.png"); }
+.card[data-card="2"] .card-front { background-image: url("/ad5/Dexter2.png"); }
+.card[data-card="3"] .card-front { background-image: url("/ad5/Dexter3.png"); }
+.card[data-card="4"] .card-front { background-image: url("/ad5/Dexter4.png"); }
+.card[data-card="5"] .card-front { background-image: url("/ad5/Dexter5.png"); }
+.card[data-card="6"] .card-front { background-image: url("/ad5/Dexter6.png"); }
+.card[data-card="7"] .card-front { background-image: url("/ad5/Dexter7.png"); }
+.card[data-card="8"] .card-front { background-image: url("/ad5/Dexter8.png"); }

@@ -1,12 +1,15 @@
-/* Agentw */
-.card-front{background-image:url('/ad4/Agentw_logo.png') !important;}
-.card-back.image-1{background-image:url('/ad4/Agentw1.png') !important;}
-.card-back.image-2{background-image:url('/ad4/Agentw2.png') !important;}
-.card-back.image-3{background-image:url('/ad4/Agentw3.png') !important;}
-.card-back.image-4{background-image:url('/ad4/Agentw4.png') !important;}
-.card-back.image-5{background-image:url('/ad4/Agentw5.png') !important;}
-.card-back.image-6{background-image:url('/ad4/Agentw6.png') !important;}
-.card-back.image-7{background-image:url('/ad4/Agentw7.png') !important;}
-.card-back.image-8{background-image:url('/ad4/Agentw8.png') !important;}
-.card-back.image-9{background-image:url('/ad4/Agentw9.png') !important;}
-.card-back.image-10{background-image:url('/ad4/Agentw10.png') !important;}
+/* Ad Pack 4 – Agentw, 8 images */
+.card-back {
+  background-image: url("/ad4/Agentw_logo.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.card[data-card="1"] .card-front { background-image: url("/ad4/Agentw1.png"); }
+.card[data-card="2"] .card-front { background-image: url("/ad4/Agentw2.png"); }
+.card[data-card="3"] .card-front { background-image: url("/ad4/Agentw3.png"); }
+.card[data-card="4"] .card-front { background-image: url("/ad4/Agentw4.png"); }
+.card[data-card="5"] .card-front { background-image: url("/ad4/Agentw5.png"); }
+.card[data-card="6"] .card-front { background-image: url("/ad4/Agentw6.png"); }
+.card[data-card="7"] .card-front { background-image: url("/ad4/Agentw7.png"); }
+.card[data-card="8"] .card-front { background-image: url("/ad4/Agentw8.png"); }
