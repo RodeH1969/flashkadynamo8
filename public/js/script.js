@@ -1,7 +1,7 @@
-// Flashka – Always-play, 17-attempt rule, SMS on win
+// Flashka – Always-play, 15-attempt rule, SMS on win
 // Card fronts/back images are controlled by CSS (Remy set).
 
-const MAX_ATTEMPTS = 17;      // total TURNS allowed (each turn = 2 flips)
+const MAX_ATTEMPTS = 15;      // total TURNS allowed (each turn = 2 flips)
 const TOTAL_PAIRS  = 8;       // 8 pairs => 16 cards
 
 // Persistent (local) play counter only – no lock
@@ -148,7 +148,7 @@ function showResult(didWin) {
     shareBtn.style.display = "inline-block";
     shareBtn.textContent = "Send SMS";
     const smsBody =
-      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 17 moves!!";
+      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 15 moves!!";
     shareBtn.onclick = () => {
       window.location.href = `sms:?&body=${encodeURIComponent(smsBody)}`;
     };
