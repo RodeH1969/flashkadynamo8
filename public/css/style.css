@@ -255,8 +255,8 @@ button:hover {
     }
     .game-board {
         grid-template-columns: repeat(4, 1fr);
-        max-width: 85vw;
-        gap: 3px;
+        max-width: 92vw;
+        gap: 4px;
         margin: 10px auto;
     }
     .result {
