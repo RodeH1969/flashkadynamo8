@@ -9,10 +9,10 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E">
 
   <!-- Base game styles (flip logic etc.). Do NOT change this file when switching ads -->
-  <link rel="stylesheet" href="/css/style.css?v=base-21" />
+  <link rel="stylesheet" href="css/style.css?v=base-21" />
 
   <!-- Pack override (images only). Change this ONE line to swap sponsors -->
-  <link id="pack-css" rel="stylesheet" href="/css/packs/ad2.css?v=1"><!-- default Remy -->
+  <link id="pack-css" rel="stylesheet" href="css/packs/ad2.css?v=1"><!-- default Remy -->
 
   <!-- (Optional) Allow kiosk/query to select pack safely via ?pack=adN or ?ad=N -->
   <script>
@@ -23,30 +23,30 @@
         if (/^[1-7]$/.test(p)) p = 'ad' + p;
         if (/^ad[1-7]$/.test(p)) {
           var el = document.getElementById('pack-css');
-          if (el) el.href = '/css/packs/' + p + '.css?v=1';
+          if (el) el.href = 'css/packs/' + p + '.css?v=1';
         }
       } catch (e) { /* ignore */ }
     })();
   </script>
 
   <!-- Winner/Loser FX (keep if you use them) -->
-  <link rel="stylesheet" href="/css/winfx.css?v=fx" />
-  <link rel="stylesheet" href="/css/losefx.css?v=fx" />
+  <link rel="stylesheet" href="css/winfx.css?v=fx" />
+  <link rel="stylesheet" href="css/losefx.css?v=fx" />
 
   <!-- Game scripts (unchanged) -->
-  <script defer src="/js/script.js?v=21"></script>
-  <script defer src="/js/winfx.js?v=fx"></script>
-  <script defer src="/js/losefx.js?v=fx"></script>
+  <script defer src="js/script.js?v=21"></script>
+  <script defer src="js/winfx.js?v=fx"></script>
+  <script defer src="js/losefx.js?v=fx"></script>
 </head>
 <body>
   <!-- Welcome Modal -->
   <div id="welcome-modal" class="welcome-modal">
     <div class="modal-content">
-      <button class="modal-close" id="modal-close">&times;</button>
       <h2 class="modal-title">Welcome to Flashka!</h2>
       <p class="modal-message">Match 8 images in 15 attempts and win a choccy!</p>
       <p class="sponsor-text">This game brought to you by:</p>
       <div class="sponsor-logo" id="sponsor-logo"></div>
+      <button class="modal-close" id="modal-close">PLAY NOW</button>
     </div>
   </div>
 
