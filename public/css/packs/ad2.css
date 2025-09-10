@@ -35,3 +35,8 @@
 .sponsor-logo {
     background-image: url('/ad2/Remy_logo.png') !important;
 }
+
+/* Sponsor tagline for the welcome popup */
+.modal-content {
+    --sponsor-tagline: "Remy Durieux; Carina's favourite real estate agent!";
+}

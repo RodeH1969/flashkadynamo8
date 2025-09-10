@@ -35,3 +35,8 @@
 .sponsor-logo {
     background-image: url('/ad7/Agentw_logo.png') !important;
 }
+
+/* Sponsor tagline for the welcome popup */
+.modal-content {
+    --sponsor-tagline: "Save up to 30% on real estate agent's commission!";
+}
