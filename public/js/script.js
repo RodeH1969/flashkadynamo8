@@ -1,10 +1,10 @@
-// Flashka – Always-play, 15-attempt rule, SMS on win
+// Flashka — Always-play, 15-attempt rule, SMS on win
 // Card fronts/back images are controlled by CSS (Remy set).
 
 const MAX_ATTEMPTS = 15;      // total TURNS allowed (each turn = 2 flips)
 const TOTAL_PAIRS  = 8;       // 8 pairs => 16 cards
 
-// Persistent (local) play counter only – no lock
+// Persistent (local) play counter only — no lock
 const PLAY_COUNT_KEY = "flashka_plays";
 
 // DOM refs
@@ -17,12 +17,43 @@ const timesPlayedEl  = document.getElementById("times-played");
 const shareBtn       = document.getElementById("share-btn");
 const gameOverBox    = document.getElementById("game-over-box");
 
+// Modal refs
+const welcomeModal   = document.getElementById("welcome-modal");
+const modalClose     = document.getElementById("modal-close");
+const sponsorLogo    = document.getElementById("sponsor-logo");
+
 // State
 let attempts = 0;          // increments once per TURN (on the 2nd flip)
 let matchedPairs = 0;
 let lockBoard = false;
 let firstCard = null;
 let secondCard = null;
+
+// Modal functions
+function showWelcomeModal() {
+  welcomeModal.classList.remove("hidden");
+}
+
+function hideWelcomeModal() {
+  welcomeModal.classList.add("hidden");
+}
+
+// Close modal when X is clicked
+modalClose.addEventListener("click", hideWelcomeModal);
+
+// Close modal when clicking outside content
+welcomeModal.addEventListener("click", (e) => {
+  if (e.target === welcomeModal) {
+    hideWelcomeModal();
+  }
+});
+
+// Close modal with Escape key
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !welcomeModal.classList.contains("hidden")) {
+    hideWelcomeModal();
+  }
+});
 
 // Helpers
 const getPlayCount = () => Number(localStorage.getItem(PLAY_COUNT_KEY) || 0);
@@ -40,7 +71,7 @@ function updateAttemptsUI() {
 function buildDeck() {
   const ids = Array.from({ length: TOTAL_PAIRS }, (_, i) => i + 1); // 1..8
   const deck = [...ids, ...ids]; // pairs
-  // Fisher–Yates shuffle
+  // Fisher—Yates shuffle
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [deck[i], deck[j]] = [deck[j], deck[i]];
@@ -157,7 +188,7 @@ function showResult(didWin) {
       "<div class='prize-message'>To play again, just scan the QR code for a fresh game.</div>";
   } else {
     resultMsgEl.textContent =
-      "Oh shucks! Just missed it! Thanks for playing – scan the QR again any time for a fresh game.";
+      "Oh shucks! Just missed it! Thanks for playing — scan the QR again any time for a fresh game.";
     shareBtn.style.display = "none";
     shareBtn.onclick = null;
   }
@@ -187,4 +218,11 @@ function startGame() {
 }
 
 // Boot
-document.addEventListener("DOMContentLoaded", startGame);
+document.addEventListener("DOMContentLoaded", () => {
+  startGame();
+  
+  // Show welcome modal on page load
+  setTimeout(() => {
+    showWelcomeModal();
+  }, 500); // Small delay for smoother experience
+});

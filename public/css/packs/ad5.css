@@ -8,7 +8,7 @@
     background-repeat: no-repeat;
 }
 
-/* BACKS: Dexter1–Dexter8 (for 8 pairs = 16 cards) */
+/* BACKS: Dexter1—Dexter8 (for 8 pairs = 16 cards) */
 .card-back.image-1  { background-image: url('/ad5/Dexter1.png'); }
 .card-back.image-2  { background-image: url('/ad5/Dexter2.png'); }
 .card-back.image-3  { background-image: url('/ad5/Dexter3.png'); }
@@ -29,4 +29,9 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+/* Sponsor logo for the welcome popup */
+.sponsor-logo {
+    background-image: url('/ad5/Dexter_logo.png') !important;
 }
