@@ -54,7 +54,7 @@
     msg.style.borderRadius = '10px';
     msg.style.border = '3px solid #1e7e34';
     msg.style.fontWeight = 'bold';
-    msg.innerHTML = `<h2 style="color: white; margin: 0 0 10px 0;">WINNER!</h2><p style="color: white; margin: 0;">Show this screen when your coffee is ready to collect your CHOCCY surprise.</p>`;
+    msg.innerHTML = `<h2 style="color: white; margin: 0 0 10px 0;">WINNER!</h2><p style="color: white; margin: 0;">Show this screen at the counter to collect your CHOCCY!</p>`;
     root.appendChild(msg);
 
     // Sound

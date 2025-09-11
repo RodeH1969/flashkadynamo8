@@ -185,7 +185,7 @@ function showResult(didWin) {
     gameOverBox.style.border = "2px solid #1e7e34";
     
     resultMsgEl.textContent =
-      "Woohoo. You won a choccy surprise. Just show this screen when you're called that your coffee is ready & collect your treat!";
+      "Woohoo!! You won! Show this screen at the counter to collect your CHOCCY!";
 
     // Show SMS button only on a win
     shareBtn.style.display = "inline-block";
@@ -212,7 +212,7 @@ function showResult(didWin) {
     gameOverBox.style.border = "2px solid #c82333";
     
     resultMsgEl.textContent =
-      "Oh shucks! Just missed it! Thanks for playing — scan the QR again any time for a fresh game.";
+      "Oh shucks! Just missed it! Thanks for playing. On your next visit scan the QR code to play again.";
     shareBtn.style.display = "none";
     shareBtn.onclick = null;
   }
@@ -252,9 +252,49 @@ function startGame() {
   deck.forEach((id, idx) => boardEl.appendChild(makeCard(id, idx)));
 }
 
+function setSponsorTagline() {
+  // Find the ticker text element
+  const tickerEl = document.querySelector(".ticker-text");
+  
+  if (!tickerEl) {
+    console.error("ticker-text element not found!");
+    return;
+  }
+  
+  // Get current ad pack from URL or default to ad2
+  const urlParams = new URLSearchParams(window.location.search);
+  let pack = urlParams.get('pack') || urlParams.get('ad') || 'ad2';
+  
+  // Normalize pack name
+  if (/^[1-7]$/.test(pack)) pack = 'ad' + pack;
+  
+  // Tagline messages for each ad pack
+  const taglines = {
+    'ad1': "The sleeper hit show streaming now on Paramount Plus.",
+    'ad2': "Remy Durieux; Carina's favourite real estate agent!",
+    'ad3': "Married at First Sight favourites!",
+    'ad4': "Save up to 30% on real estate agent's commission!",
+    'ad5': "The sleeper hit show streaming now on Paramount Plus.",
+    'ad7': "Save up to 30% on real estate agent's commission!"
+  };
+  
+  const selectedTagline = taglines[pack] || taglines['ad2'];
+  
+  // Set the ticker text
+  tickerEl.textContent = selectedTagline;
+  
+  console.log(`Ticker set: ${pack} -> ${selectedTagline}`);
+}
+
 // Boot
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("DOM loaded, starting game...");
   startGame();
+  
+  // Set sponsor tagline
+  setTimeout(() => {
+    setSponsorTagline();
+  }, 100);
   
   // Show welcome modal on page load
   setTimeout(() => {

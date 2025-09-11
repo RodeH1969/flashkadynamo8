@@ -35,8 +35,3 @@
 .sponsor-logo {
     background-image: url('/ad1/Dexter_logo.png') !important;
 }
-
-/* Sponsor tagline for the welcome popup */
-.modal-content {
-    --sponsor-tagline: "The sleeper hit show streaming now on Paramount Plus.";
-}

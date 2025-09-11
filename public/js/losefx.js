@@ -52,7 +52,7 @@
     msg.style.borderRadius = '10px';
     msg.style.border = '3px solid #c82333';
     msg.style.fontWeight = 'bold';
-    msg.innerHTML = `<h2 style="color: white; margin: 0 0 10px 0;">Oh shucks! Just missed it!</h2><p style="color: white; margin: 0;">Thanks for playing — scan the QR again any time for a fresh game.</p>`;
+    msg.innerHTML = `<h2 style="color: white; margin: 0 0 10px 0;">Oh shucks! Just missed it!</h2><p style="color: white; margin: 0;">Thanks for playing. On your next visit scan the QR code to play again.</p>`;
     root.appendChild(msg);
 
     // Sound (with iOS-friendly fallback)
