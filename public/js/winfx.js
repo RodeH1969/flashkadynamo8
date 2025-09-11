@@ -45,10 +45,16 @@
       root.appendChild(b);
     }
 
-    // Message
+    // Message with BRIGHT GREEN background
     const msg = document.createElement('div');
     msg.className = 'message';
-    msg.innerHTML = `<h2>WINNER!</h2><p>Show this screen when your coffee is ready to collect your CHOCCY surprise.</p>`;
+    msg.style.backgroundColor = '#28a745';  // Bright green background
+    msg.style.color = 'white';              // White text
+    msg.style.padding = '20px';
+    msg.style.borderRadius = '10px';
+    msg.style.border = '3px solid #1e7e34';
+    msg.style.fontWeight = 'bold';
+    msg.innerHTML = `<h2 style="color: white; margin: 0 0 10px 0;">WINNER!</h2><p style="color: white; margin: 0;">Show this screen when your coffee is ready to collect your CHOCCY surprise.</p>`;
     root.appendChild(msg);
 
     // Sound

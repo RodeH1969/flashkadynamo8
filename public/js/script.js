@@ -172,6 +172,18 @@ function showResult(didWin) {
   gameOverBox.innerHTML = "";
 
   if (didWin) {
+    // WINNER - Bright green background
+    resultMsgEl.style.backgroundColor = "#28a745";
+    resultMsgEl.style.color = "white";
+    resultMsgEl.style.padding = "15px";
+    resultMsgEl.style.borderRadius = "8px";
+    resultMsgEl.style.fontWeight = "bold";
+    resultMsgEl.style.margin = "10px 0";
+    
+    gameOverBox.style.backgroundColor = "#28a745";
+    gameOverBox.style.color = "white";
+    gameOverBox.style.border = "2px solid #1e7e34";
+    
     resultMsgEl.textContent =
       "Woohoo. You won a choccy surprise. Just show this screen when you're called that your coffee is ready & collect your treat!";
 
@@ -187,6 +199,18 @@ function showResult(didWin) {
     gameOverBox.innerHTML =
       "<div class='prize-message'>To play again, just scan the QR code for a fresh game.</div>";
   } else {
+    // LOSER - Bright red background
+    resultMsgEl.style.backgroundColor = "#dc3545";
+    resultMsgEl.style.color = "white";
+    resultMsgEl.style.padding = "15px";
+    resultMsgEl.style.borderRadius = "8px";
+    resultMsgEl.style.fontWeight = "bold";
+    resultMsgEl.style.margin = "10px 0";
+    
+    gameOverBox.style.backgroundColor = "#dc3545";
+    gameOverBox.style.color = "white";
+    gameOverBox.style.border = "2px solid #c82333";
+    
     resultMsgEl.textContent =
       "Oh shucks! Just missed it! Thanks for playing — scan the QR again any time for a fresh game.";
     shareBtn.style.display = "none";
@@ -211,6 +235,17 @@ function startGame() {
   resultMsgEl.textContent = "";
   shareBtn.style.display = "none";
   boardEl.innerHTML = "";
+
+  // Reset styling
+  resultMsgEl.style.backgroundColor = "";
+  resultMsgEl.style.color = "";
+  resultMsgEl.style.padding = "";
+  resultMsgEl.style.borderRadius = "";
+  resultMsgEl.style.fontWeight = "";
+  resultMsgEl.style.margin = "";
+  gameOverBox.style.backgroundColor = "";
+  gameOverBox.style.color = "";
+  gameOverBox.style.border = "";
 
   // Build & render
   const deck = buildDeck();
