@@ -20,8 +20,9 @@
       try {
         var q = new URLSearchParams(location.search);
         var p = (q.get('pack') || q.get('ad') || '').toLowerCase().trim();
-        if (/^[1-7]$/.test(p)) p = 'ad' + p;
-        if (/^ad[1-7]$/.test(p)) {
+        // UPDATED TO SUPPORT ad8
+        if (/^[1-8]$/.test(p)) p = 'ad' + p;
+        if (/^ad[1-8]$/.test(p)) {
           var el = document.getElementById('pack-css');
           if (el) el.href = 'css/packs/' + p + '.css?v=1';
         }

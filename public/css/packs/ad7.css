@@ -1,22 +1,22 @@
-/* AD7 Pack: Agentw Images */
+/* AD1 Pack: Dexter Images */
 
-/* FRONT: Agentw logo on every card */
+/* FRONT: Dexter logo on every card */
 .card-front {
-    background-image: url('/ad7/Agentw_logo.png');
+    background-image: url('/ad1/Dexter_logo.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-/* BACKS: Agentw1—Agentw8 (for 8 pairs = 16 cards) */
-.card-back.image-1  { background-image: url('/ad7/Agentw1.png'); }
-.card-back.image-2  { background-image: url('/ad7/Agentw2.png'); }
-.card-back.image-3  { background-image: url('/ad7/Agentw3.png'); }
-.card-back.image-4  { background-image: url('/ad7/Agentw4.png'); }
-.card-back.image-5  { background-image: url('/ad7/Agentw5.png'); }
-.card-back.image-6  { background-image: url('/ad7/Agentw6.png'); }
-.card-back.image-7  { background-image: url('/ad7/Agentw7.png'); }
-.card-back.image-8  { background-image: url('/ad7/Agentw8.png'); }
+/* BACKS: Dexter1—Dexter8 (for 8 pairs = 16 cards) */
+.card-back.image-1  { background-image: url('/ad1/Dexter1.png'); }
+.card-back.image-2  { background-image: url('/ad1/Dexter2.png'); }
+.card-back.image-3  { background-image: url('/ad1/Dexter3.png'); }
+.card-back.image-4  { background-image: url('/ad1/Dexter4.png'); }
+.card-back.image-5  { background-image: url('/ad1/Dexter5.png'); }
+.card-back.image-6  { background-image: url('/ad1/Dexter6.png'); }
+.card-back.image-7  { background-image: url('/ad1/Dexter7.png'); }
+.card-back.image-8  { background-image: url('/ad1/Dexter8.png'); }
 
 .card-back.image-1,
 .card-back.image-2,
@@ -33,10 +33,5 @@
 
 /* Sponsor logo for the welcome popup */
 .sponsor-logo {
-    background-image: url('/ad7/Agentw_logo.png') !important;
-}
-
-/* Sponsor tagline for the welcome popup */
-.modal-content {
-    --sponsor-tagline: "Save up to 30% on real estate agent's commission!";
+    background-image: url('/ad1/Dexter_logo.png') !important;
 }

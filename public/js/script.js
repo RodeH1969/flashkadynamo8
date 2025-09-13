@@ -1,10 +1,10 @@
-// Flashka — Always-play, 15-attempt rule, SMS on win
+// Flashka – Always-play, 15-attempt rule, SMS on win
 // Card fronts/back images are controlled by CSS (Remy set).
 
 const MAX_ATTEMPTS = 15;      // total TURNS allowed (each turn = 2 flips)
 const TOTAL_PAIRS  = 8;       // 8 pairs => 16 cards
 
-// Persistent (local) play counter only — no lock
+// Persistent (local) play counter only – no lock
 const PLAY_COUNT_KEY = "flashka_plays";
 
 // DOM refs
@@ -71,7 +71,7 @@ function updateAttemptsUI() {
 function buildDeck() {
   const ids = Array.from({ length: TOTAL_PAIRS }, (_, i) => i + 1); // 1..8
   const deck = [...ids, ...ids]; // pairs
-  // Fisher—Yates shuffle
+  // Fisher–Yates shuffle
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [deck[i], deck[j]] = [deck[j], deck[i]];
@@ -265,17 +265,18 @@ function setSponsorTagline() {
   const urlParams = new URLSearchParams(window.location.search);
   let pack = urlParams.get('pack') || urlParams.get('ad') || 'ad2';
   
-  // Normalize pack name
-  if (/^[1-7]$/.test(pack)) pack = 'ad' + pack;
+  // Normalize pack name - UPDATED TO SUPPORT ad8
+  if (/^[1-8]$/.test(pack)) pack = 'ad' + pack;
   
-  // Tagline messages for each ad pack
+  // Tagline messages for each ad pack - ADDED ad8
   const taglines = {
     'ad1': "The sleeper hit show streaming now on Paramount Plus.",
     'ad2': "Remy Durieux; Carina's favourite real estate agent!",
     'ad3': "Married at First Sight favourites!",
     'ad4': "Save up to 30% on real estate agent's commission!",
     'ad5': "The sleeper hit show streaming now on Paramount Plus.",
-    'ad7': "Save up to 30% on real estate agent's commission!"
+    'ad7': "Save up to 30% on real estate agent's commission!",
+    'ad8': "Yellow Utes: Instant Ute Rental Anywhere in Brisbane!"
   };
   
   const selectedTagline = taglines[pack] || taglines['ad2'];
