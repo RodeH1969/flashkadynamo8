@@ -191,7 +191,7 @@ function showResult(didWin) {
     shareBtn.style.display = "inline-block";
     shareBtn.textContent = "Send SMS";
     const smsBody =
-      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 15 moves!!";
+      "hey I just won a choccy surprise for solving flashka in 15 moves!!";
     shareBtn.onclick = () => {
       window.location.href = `sms:?&body=${encodeURIComponent(smsBody)}`;
     };
@@ -271,7 +271,7 @@ function setSponsorTagline() {
   // Tagline messages for each ad pack - ADDED ad8
   const taglines = {
     'ad1': "The sleeper hit show streaming now on Paramount Plus.",
-    'ad2': "Remy Durieux; Carina's favourite real estate agent!",
+    'ad2': "Remy Durieux: Carina's favourite real estate agent!",
     'ad3': "Married at First Sight favourites!",
     'ad4': "Save up to 30% on real estate agent's commission!",
     'ad5': "The sleeper hit show streaming now on Paramount Plus.",
