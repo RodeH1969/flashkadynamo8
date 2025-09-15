@@ -1,4 +1,4 @@
-// Flashka – Always-play, 15-attempt rule, SMS on win
+// Flashka – Always-play, 15-attempt rule, SMS on win + Google Sheets tracking
 // Card fronts/back images are controlled by CSS (Remy set).
 
 const MAX_ATTEMPTS = 15;      // total TURNS allowed (each turn = 2 flips)
@@ -90,10 +90,10 @@ function makeCard(id, idx) {
   inner.className = "card-inner";
 
   const front = document.createElement("div");
-  front.className = "card-face card-front"; // CSS shows Remy logo
+  front.className = "card-face card-front"; // CSS shows logo
 
   const back = document.createElement("div");
-  back.className = `card-face card-back image-${id}`; // CSS maps to Remy# image
+  back.className = `card-face card-back image-${id}`; // CSS maps to image
 
   inner.appendChild(front);
   inner.appendChild(back);
@@ -187,11 +187,21 @@ function showResult(didWin) {
     resultMsgEl.textContent =
       "Woohoo!! You won! Show this screen at the counter to collect your CHOCCY!";
 
+    // *** SEND WIN DATA TO KIOSK SERVER ***
+    fetch('https://flashkakiosk16.onrender.com/api/win', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    }).then(response => {
+      if (response.ok) {
+        console.log('Win recorded successfully');
+      }
+    }).catch(err => console.log('Win tracking failed:', err));
+
     // Show SMS button only on a win
     shareBtn.style.display = "inline-block";
     shareBtn.textContent = "Send SMS";
     const smsBody =
-      "hey I just won a choccy surprise for solving flashka in 15 moves!!";
+      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 15 moves!!";
     shareBtn.onclick = () => {
       window.location.href = `sms:?&body=${encodeURIComponent(smsBody)}`;
     };
@@ -228,6 +238,16 @@ function startGame() {
   lockBoard = false;
   firstCard = null;
   secondCard = null;
+
+  // *** SEND PLAY DATA TO KIOSK SERVER ***
+  fetch('https://flashkakiosk16.onrender.com/api/play', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  }).then(response => {
+    if (response.ok) {
+      console.log('Game play recorded successfully');
+    }
+  }).catch(err => console.log('Play tracking failed:', err));
 
   // Reset UI
   updateAttemptsUI();
@@ -271,7 +291,7 @@ function setSponsorTagline() {
   // Tagline messages for each ad pack - ADDED ad8
   const taglines = {
     'ad1': "The sleeper hit show streaming now on Paramount Plus.",
-    'ad2': "Remy Durieux: Carina's favourite real estate agent!",
+    'ad2': "Remy Durieux; Carina's favourite real estate agent!",
     'ad3': "Married at First Sight favourites!",
     'ad4': "Save up to 30% on real estate agent's commission!",
     'ad5': "The sleeper hit show streaming now on Paramount Plus.",
