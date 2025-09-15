@@ -1,4 +1,4 @@
-// Flashka – Always-play, 15-attempt rule, SMS on win + Google Sheets tracking
+// Flashka – Always-play, 15-attempt rule, SMS on win + Google Sheets tracking + DEBUG ALERTS
 // Card fronts/back images are controlled by CSS (Remy set).
 
 const MAX_ATTEMPTS = 15;      // total TURNS allowed (each turn = 2 flips)
@@ -172,6 +172,9 @@ function showResult(didWin) {
   gameOverBox.innerHTML = "";
 
   if (didWin) {
+    // *** DEBUG ALERT - REMOVE AFTER TESTING ***
+    alert("WIN DETECTED! About to send tracking data...");
+
     // WINNER - Bright green background
     resultMsgEl.style.backgroundColor = "#28a745";
     resultMsgEl.style.color = "white";
@@ -187,15 +190,21 @@ function showResult(didWin) {
     resultMsgEl.textContent =
       "Woohoo!! You won! Show this screen at the counter to collect your CHOCCY!";
 
-    // *** SEND WIN DATA TO KIOSK SERVER ***
+    // *** SEND WIN DATA TO KIOSK SERVER WITH DEBUG ALERTS ***
     fetch('https://flashkakiosk16.onrender.com/api/win', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     }).then(response => {
       if (response.ok) {
+        alert("WIN TRACKING SUCCESSFUL!"); // DEBUG ALERT
         console.log('Win recorded successfully');
+      } else {
+        alert("WIN TRACKING FAILED - Response not OK: " + response.status); // DEBUG ALERT
       }
-    }).catch(err => console.log('Win tracking failed:', err));
+    }).catch(err => {
+      alert("WIN TRACKING ERROR: " + err.message); // DEBUG ALERT
+      console.log('Win tracking failed:', err);
+    });
 
     // Show SMS button only on a win
     shareBtn.style.display = "inline-block";
@@ -209,6 +218,9 @@ function showResult(didWin) {
     gameOverBox.innerHTML =
       "<div class='prize-message'>To play again, just scan the QR code for a fresh game.</div>";
   } else {
+    // *** DEBUG ALERT FOR LOSS - REMOVE AFTER TESTING ***
+    alert("LOSS DETECTED - No win tracking should happen");
+
     // LOSER - Bright red background
     resultMsgEl.style.backgroundColor = "#dc3545";
     resultMsgEl.style.color = "white";
@@ -232,6 +244,9 @@ function showResult(didWin) {
 }
 
 function startGame() {
+  // *** DEBUG ALERT FOR GAME START - REMOVE AFTER TESTING ***
+  alert("GAME STARTING - About to send play tracking...");
+
   // Reset state for a run
   attempts = 0;
   matchedPairs = 0;
@@ -239,15 +254,21 @@ function startGame() {
   firstCard = null;
   secondCard = null;
 
-  // *** SEND PLAY DATA TO KIOSK SERVER ***
+  // *** SEND PLAY DATA TO KIOSK SERVER WITH DEBUG ALERTS ***
   fetch('https://flashkakiosk16.onrender.com/api/play', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }
   }).then(response => {
     if (response.ok) {
+      alert("PLAY TRACKING SUCCESSFUL!"); // DEBUG ALERT
       console.log('Game play recorded successfully');
+    } else {
+      alert("PLAY TRACKING FAILED - Response not OK: " + response.status); // DEBUG ALERT
     }
-  }).catch(err => console.log('Play tracking failed:', err));
+  }).catch(err => {
+    alert("PLAY TRACKING ERROR: " + err.message); // DEBUG ALERT
+    console.log('Play tracking failed:', err);
+  });
 
   // Reset UI
   updateAttemptsUI();
