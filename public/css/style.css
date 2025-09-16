@@ -364,4 +364,71 @@ button:hover {
         margin: 0 0 5px 0;
     }
     h1::before,
-    h1
+    h1::after {
+        font-size: 3rem;
+    }
+    .instructions {
+        font-size: 1.1rem;
+        margin: 5px 0;
+    }
+    .status {
+        font-size: 0.8rem;
+        flex-direction: row;
+        align-items: center;
+        gap: 15px;
+        margin: 5px 0;
+    }
+    .number {
+        font-size: 1.5rem;
+    }
+    .game-board {
+        grid-template-columns: repeat(2, 1fr);
+        width: 76.5vw; /* 15% smaller than 90vw */
+        max-width: 510px; /* 15% smaller than 600px */
+        gap: 4px;
+        margin: 10px auto;
+    }
+    .result {
+        margin-top: 6px;
+    }
+    .game-over-box {
+        font-size: 0.8rem;
+    }
+    button {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        margin: 3px;
+    }
+
+    /* Modal responsive styles for mobile */
+    .modal-content {
+        padding: 20px;
+        margin: 10px;
+    }
+    
+    .modal-title {
+        font-size: 2.5rem;
+    }
+    
+    .modal-message {
+        font-size: 1.2rem;
+    }
+    
+    .sponsor-logo {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .sponsor-text {
+        font-size: 1rem;
+    }
+
+    .sponsor-tagline {
+        width: 280px;
+        height: 50px;
+    }
+
+    .ticker-text {
+        font-size: 16px;
+    }
+}
