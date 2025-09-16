@@ -202,17 +202,9 @@ function showResult(didWin) {
       }
     }).catch(err => console.log('Win tracking failed:', err));
 
-    // Show SMS button only on a win
-    shareBtn.style.display = "inline-block";
-    shareBtn.textContent = "Send SMS";
-    const smsBody =
-      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 6 moves!!";
-    shareBtn.onclick = () => {
-      window.location.href = `sms:?&body=${encodeURIComponent(smsBody)}`;
-    };
-
-    gameOverBox.innerHTML =
-      "<div class='prize-message'>To play again, just scan the QR code for a fresh game.</div>";
+    // Hide SMS button on win
+    shareBtn.style.display = "none";
+    shareBtn.onclick = null;
   } else {
     // LOSER - Bright red background
     resultMsgEl.style.backgroundColor = "#dc3545";
