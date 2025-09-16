@@ -1,6 +1,6 @@
 // Flashka – 4 unique images, 8 cards total, 7-attempt rule, SMS on win + Google Sheets tracking
 
-const MAX_ATTEMPTS = 7;      // total TURNS allowed (each turn = 2 flips)
+const MAX_ATTEMPTS = 6;      // total TURNS allowed (each turn = 2 flips)
 const TOTAL_PAIRS  = 4;      // 4 pairs = 8 cards total
 
 // Persistent (local) play counter only – no lock
@@ -206,7 +206,7 @@ function showResult(didWin) {
     shareBtn.style.display = "inline-block";
     shareBtn.textContent = "Send SMS";
     const smsBody =
-      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 7 moves!!";
+      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 6 moves!!";
     shareBtn.onclick = () => {
       window.location.href = `sms:?&body=${encodeURIComponent(smsBody)}`;
     };
