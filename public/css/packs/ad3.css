@@ -1,4 +1,4 @@
-/* AD3 Pack: MAFS Images */
+/* AD3 Pack: Married at First Sight Images (4 images version) */
 
 /* FRONT: MAFS logo on every card */
 .card-front {
@@ -8,24 +8,16 @@
     background-repeat: no-repeat;
 }
 
-/* BACKS: MAFS1—MAFS8 (for 8 pairs = 16 cards) */
+/* BACKS: MAFS1–MAFS4 (for 4 pairs = 8 cards) */
 .card-back.image-1  { background-image: url('/ad3/MAFS1.png'); }
 .card-back.image-2  { background-image: url('/ad3/MAFS2.png'); }
 .card-back.image-3  { background-image: url('/ad3/MAFS3.png'); }
 .card-back.image-4  { background-image: url('/ad3/MAFS4.png'); }
-.card-back.image-5  { background-image: url('/ad3/MAFS5.png'); }
-.card-back.image-6  { background-image: url('/ad3/MAFS6.png'); }
-.card-back.image-7  { background-image: url('/ad3/MAFS7.png'); }
-.card-back.image-8  { background-image: url('/ad3/MAFS8.png'); }
 
 .card-back.image-1,
 .card-back.image-2,
 .card-back.image-3,
-.card-back.image-4,
-.card-back.image-5,
-.card-back.image-6,
-.card-back.image-7,
-.card-back.image-8 {
+.card-back.image-4 {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

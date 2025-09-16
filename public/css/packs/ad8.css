@@ -1,4 +1,4 @@
-/* AD8 Pack: Yellow Utes Images */
+/* AD8 Pack: Yellow Utes Images (4 images version) */
 
 /* FRONT: Yellow Utes logo on every card */
 .card-front {
@@ -8,24 +8,16 @@
     background-repeat: no-repeat;
 }
 
-/* BACKS: yellowu1–yellowu8 (for 8 pairs = 16 cards) */
+/* BACKS: yellowu1–yellowu4 (for 4 pairs = 8 cards) */
 .card-back.image-1  { background-image: url('/ad8/yellowu1.png'); }
 .card-back.image-2  { background-image: url('/ad8/yellowu2.png'); }
 .card-back.image-3  { background-image: url('/ad8/yellowu3.png'); }
 .card-back.image-4  { background-image: url('/ad8/yellowu4.png'); }
-.card-back.image-5  { background-image: url('/ad8/yellowu5.png'); }
-.card-back.image-6  { background-image: url('/ad8/yellowu6.png'); }
-.card-back.image-7  { background-image: url('/ad8/yellowu7.png'); }
-.card-back.image-8  { background-image: url('/ad8/yellowu8.png'); }
 
 .card-back.image-1,
 .card-back.image-2,
 .card-back.image-3,
-.card-back.image-4,
-.card-back.image-5,
-.card-back.image-6,
-.card-back.image-7,
-.card-back.image-8 {
+.card-back.image-4 {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
