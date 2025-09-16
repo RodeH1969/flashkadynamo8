@@ -74,8 +74,8 @@ h1::after {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
-    width: 90vw;
-    max-width: 600px;
+    width: 81vw; /* 10% smaller than 90vw */
+    max-width: 540px; /* 10% smaller than 600px */
     margin: 0 auto;
 }
 
@@ -383,8 +383,8 @@ button:hover {
     }
     .game-board {
         grid-template-columns: repeat(2, 1fr);
-        width: 76.5vw; /* 15% smaller than 90vw */
-        max-width: 510px; /* 15% smaller than 600px */
+        width: 68.85vw; /* 10% smaller than 76.5vw */
+        max-width: 459px; /* 10% smaller than 510px */
         gap: 4px;
         margin: 10px auto;
     }
