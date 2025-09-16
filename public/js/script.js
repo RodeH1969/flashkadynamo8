@@ -1,8 +1,7 @@
-// Flashka – Always-play, 15-attempt rule, SMS on win + Google Sheets tracking
-// Card fronts/back images are controlled by CSS (Remy set).
+// Flashka – 4 unique images, 8 cards total, 7-attempt rule, SMS on win + Google Sheets tracking
 
-const MAX_ATTEMPTS = 15;      // total TURNS allowed (each turn = 2 flips)
-const TOTAL_PAIRS  = 8;       // 8 pairs => 16 cards
+const MAX_ATTEMPTS = 7;      // total TURNS allowed (each turn = 2 flips)
+const TOTAL_PAIRS  = 4;      // 4 pairs = 8 cards total
 
 // Persistent (local) play counter only – no lock
 const PLAY_COUNT_KEY = "flashka_plays";
@@ -69,13 +68,19 @@ function updateAttemptsUI() {
 }
 
 function buildDeck() {
-  const ids = Array.from({ length: TOTAL_PAIRS }, (_, i) => i + 1); // 1..8
-  const deck = [...ids, ...ids]; // pairs
+  // Create 4 unique image IDs: [1, 2, 3, 4]
+  const ids = Array.from({ length: TOTAL_PAIRS }, (_, i) => i + 1);
+  
+  // Create pairs: [1, 2, 3, 4, 1, 2, 3, 4] = 8 cards total
+  const deck = [...ids, ...ids];
+  
   // Fisher–Yates shuffle
   for (let i = deck.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [deck[i], deck[j]] = [deck[j], deck[i]];
   }
+  
+  console.log(`Deck created: ${deck.length} cards for ${TOTAL_PAIRS} pairs`);
   return deck;
 }
 
@@ -93,7 +98,7 @@ function makeCard(id, idx) {
   front.className = "card-face card-front"; // CSS shows logo
 
   const back = document.createElement("div");
-  back.className = `card-face card-back image-${id}`; // CSS maps to image
+  back.className = `card-face card-back image-${id}`; // CSS maps to image 1-4
 
   inner.appendChild(front);
   inner.appendChild(back);
@@ -201,7 +206,7 @@ function showResult(didWin) {
     shareBtn.style.display = "inline-block";
     shareBtn.textContent = "Send SMS";
     const smsBody =
-      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 15 moves!!";
+      "hey I just won a choccy surprise at Le Cafe Ashgrove for solving flashka in 7 moves!!";
     shareBtn.onclick = () => {
       window.location.href = `sms:?&body=${encodeURIComponent(smsBody)}`;
     };
@@ -267,7 +272,7 @@ function startGame() {
   gameOverBox.style.color = "";
   gameOverBox.style.border = "";
 
-  // Build & render
+  // Build & render 8 cards (4 pairs)
   const deck = buildDeck();
   deck.forEach((id, idx) => boardEl.appendChild(makeCard(id, idx)));
 }
